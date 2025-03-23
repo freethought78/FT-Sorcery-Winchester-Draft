@@ -1,11 +1,15 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+datas = [
+    ('public', 'public'),  # Keep the public folder
+    ('beta.csv', '.')  # Ensure beta.csv is included in the package
+]
 
 a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('public', 'public')],
+    datas=datas,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

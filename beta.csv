@@ -1,0 +1,407 @@
+Type,Name,Rarity
+AIR,Apprentice Wizard,Ordinary
+AIR,Blink,Ordinary
+AIR,Blood Ravens,Ordinary
+AIR,Cloud Spirit,Ordinary
+AIR,Dead of Night Demon,Ordinary
+AIR,Disenchant,Ordinary
+AIR,Fade,Ordinary
+AIR,Grapple Shot,Ordinary
+AIR,Highland Clansmen,Ordinary
+AIR,Lightning Bolt,Ordinary
+AIR,Men of Leng,Ordinary
+AIR,Midnight Rogue,Ordinary
+AIR,Mortality,Ordinary
+AIR,Palliburrie Bat,Ordinary
+AIR,Plumed Pegasus,Ordinary
+AIR,Rain of Arrows,Ordinary
+AIR,Roaming Monster,Ordinary
+AIR,Snow Leopard,Ordinary
+AIR,Spectral Stalker,Ordinary
+AIR,Teleport,Ordinary
+AIR,Wall of Air,Ordinary
+AIR,Chain Lightning,Exceptional
+AIR,Daperyll Vampire,Exceptional
+AIR,Evil Presence,Exceptional
+AIR,Flanking Maneuver,Exceptional
+AIR,Gyre Hippogriffs,Exceptional
+AIR,Haast Eagle,Exceptional
+AIR,Headless Haunt,Exceptional
+AIR,Kite Archer,Exceptional
+AIR,Moon Clan Werewolf,Exceptional
+AIR,Peregrine Apparition,Exceptional
+AIR,Phantasmal Shade,Exceptional
+AIR,Phantom Steed,Exceptional
+AIR,Phase Assassin,Exceptional
+AIR,Psionic Blast,Exceptional
+AIR,Raise Dead,Exceptional
+AIR,Recall,Exceptional
+AIR,Skirmishers of Mu,Exceptional
+AIR,Sling Pixies,Exceptional
+AIR,Spire Lich,Exceptional
+AIR,Summoning Sphere,Exceptional
+AIR,Telekinesis,Exceptional
+AIR,Thunderstorm,Exceptional
+AIR,Waypoint Portal,Exceptional
+AIR,Whirling Blades,Exceptional
+AIR,Wind Sylph,Exceptional
+AIR,Windblast,Exceptional
+AIR,Candlemas Monks,Elite
+AIR,Chaos Twister,Elite
+AIR,East-West Dragon,Elite
+AIR,Grandmaster Wizard,Elite
+AIR,Highland Falconer,Elite
+AIR,Hounds of Ondaros,Elite
+AIR,Nightmare,Elite
+AIR,Nimbus Jinn,Elite
+AIR,Puppet Master,Elite
+AIR,Recurring Specter,Elite
+AIR,Riddle Sphinx,Elite
+AIR,Sky Baron,Elite
+AIR,Unlikely Alliance,Elite
+AIR,Vril Revenant,Elite
+AIR,Zephyranne Airship,Elite
+AIR,Browse,Unique
+AIR,Dream-Quest,Unique
+AIR,Grim Reaper,Unique
+AIR,Highland Princess,Unique
+AIR,Lord of the Void,Unique
+AIR,Occult Ritual,Unique
+AIR,Ultimate Horror,Unique
+AIR,Witherwing Hero,Unique
+EARTH,Älvalinne Dryads,Ordinary
+EARTH,Amazon Warriors,Ordinary
+EARTH,Belmotte Longbowmen,Ordinary
+EARTH,Bone Rabble,Ordinary
+EARTH,Border Militia,Ordinary
+EARTH,Bosk Troll,Ordinary
+EARTH,Bury,Ordinary
+EARTH,Cave Trolls,Ordinary
+EARTH,Common Sense,Ordinary
+EARTH,Dispel,Ordinary
+EARTH,Entangle Terrain,Ordinary
+EARTH,Exorcism,Ordinary
+EARTH,Grey Wolves,Ordinary
+EARTH,Land Surveyor,Ordinary
+EARTH,Mage Slayer,Ordinary
+EARTH,Miracle Workers,Ordinary
+EARTH,Overpower,Ordinary
+EARTH,Scent Hounds,Ordinary
+EARTH,Scourge Zombies,Ordinary
+EARTH,Unravel,Ordinary
+EARTH,Wild Boars,Ordinary
+EARTH,Albespine Pikemen,Exceptional
+EARTH,Autumn Unicorn,Exceptional
+EARTH,Call to War,Exceptional
+EARTH,Cave-In,Exceptional
+EARTH,Dalcean Phalanx,Exceptional
+EARTH,Divine Healing,Exceptional
+EARTH,Dwarven Digging Team,Exceptional
+EARTH,Frontier Settlers,Exceptional
+EARTH,Gneissgnath Gnomes,Exceptional
+EARTH,House Arn Bannerman,Exceptional
+EARTH,Minecart Madness,Exceptional
+EARTH,Monastery Gargoyle,Exceptional
+EARTH,Monster Hunter,Exceptional
+EARTH,Pudge Butcher,Exceptional
+EARTH,Root Spider,Exceptional
+EARTH,Shield Maidens,Exceptional
+EARTH,Shield Wall,Exceptional
+EARTH,Sirian Templar,Exceptional
+EARTH,Slumbering Giantess,Exceptional
+EARTH,Tragedy Worrywart,Exceptional
+EARTH,Vanguard Knights,Exceptional
+EARTH,Yourke Crossbowmen,Exceptional
+EARTH,Assorted Animals,Elite
+EARTH,Atlas Wanderers,Elite
+EARTH,Conqueror Worm,Elite
+EARTH,Craterize,Elite
+EARTH,Earthquake,Elite
+EARTH,Master Tracker,Elite
+EARTH,Mordric Druids,Elite
+EARTH,Mountain Giant,Elite
+EARTH,Rest in Peace,Elite
+EARTH,Royal Bodyguard,Elite
+EARTH,Silver Valkyries,Elite
+EARTH,Sisters of Silence,Elite
+EARTH,Squirming Mass,Elite
+EARTH,Stone-gaze Gorgons,Elite
+EARTH,Wicked Witch,Elite
+EARTH,Wraetannis Titan,Elite
+EARTH,Crown Prince,Unique
+EARTH,Crusade,Unique
+EARTH,Gigantism,Unique
+EARTH,King of the Realm,Unique
+EARTH,Midland Army,Unique
+EARTH,Queen of Midland,Unique
+EARTH,Star-seeds of Uhr,Unique
+FIRE,Aramos Mercenaries,Ordinary
+FIRE,Azuridge Caravan,Ordinary
+FIRE,Beast of Burden,Ordinary
+FIRE,Boil,Ordinary
+FIRE,Cauldron Crones,Ordinary
+FIRE,Critical Strike,Ordinary
+FIRE,Firebolts,Ordinary
+FIRE,Heat Ray,Ordinary
+FIRE,Incinerate,Ordinary
+FIRE,Mad Dash,Ordinary
+FIRE,Minor Explosion,Ordinary
+FIRE,Ogre Goons,Ordinary
+FIRE,Petrosian Cavalry,Ordinary
+FIRE,Pit Vipers,Ordinary
+FIRE,Raal Dromedary,Ordinary
+FIRE,Rimland Nomads,Ordinary
+FIRE,Sacred Scarabs,Ordinary
+FIRE,Sand Worm,Ordinary
+FIRE,Sandstorm,Ordinary
+FIRE,Sirocco Scorpions,Ordinary
+FIRE,Spin Attack,Ordinary
+FIRE,Vile Imp,Ordinary
+FIRE,Wall of Fire,Ordinary
+FIRE,Awakened Mummies,Exceptional
+FIRE,Backstab,Exceptional
+FIRE,Bane Widow,Exceptional
+FIRE,Blaze,Exceptional
+FIRE,Clamor of Harpies,Exceptional
+FIRE,Colicky Dragonettes,Exceptional
+FIRE,Cone of Flame,Exceptional
+FIRE,Drought,Exceptional
+FIRE,Escyllion Cyclops,Exceptional
+FIRE,Fireball,Exceptional
+FIRE,Hillock Basilisk,Exceptional
+FIRE,Lava Salamander,Exceptional
+FIRE,Leap Attack,Exceptional
+FIRE,Outback Strider,Exceptional
+FIRE,Poison Nova,Exceptional
+FIRE,Quarrelsome Kobolds,Exceptional
+FIRE,Scavenging Fiend,Exceptional
+FIRE,Swiven Scout,Exceptional
+FIRE,Tvinnax Berserker,Exceptional
+FIRE,Wayfaring Pilgrim,Exceptional
+FIRE,Wildfire,Exceptional
+FIRE,Wills-o’-the-Wisp,Exceptional
+FIRE,Ancient Dragon,Elite
+FIRE,Askelon Phoenix,Elite
+FIRE,Bull Demons of Adum,Elite
+FIRE,Disintegrate,Elite
+FIRE,Far East Assassin,Elite
+FIRE,Flame Wave,Elite
+FIRE,Grösse Poltergeist,Elite
+FIRE,Infernal Legion,Elite
+FIRE,Infiltrate,Elite
+FIRE,Karkemish Chimera,Elite
+FIRE,Major Explosion,Elite
+FIRE,Maze Minotaur,Elite
+FIRE,Meteor Shower,Elite
+FIRE,Panorama Manticore,Elite
+FIRE,Scorched Earth,Elite
+FIRE,Seasoned Sellsword,Elite
+FIRE,Cerberus in Chains,Unique
+FIRE,Courtesan Thaïs,Unique
+FIRE,Death Dealer,Unique
+FIRE,Doomsday Prophet,Unique
+FIRE,Immolation,Unique
+FIRE,Jihad,Unique
+FIRE,Pact with the Devil,Unique
+FIRE,Warp Spasm,Unique
+WATER,Blizzard,Ordinary
+WATER,Coral-Reef Kelpie,Ordinary
+WATER,Deep-Sea Mermaids,Ordinary
+WATER,Drown,Ordinary
+WATER,Extinguish,Ordinary
+WATER,Fenvale Muse,Ordinary
+WATER,Fire Harpoons!,Ordinary
+WATER,Ice Lance,Ordinary
+WATER,Muck Lampreys,Ordinary
+WATER,Old Salt Anchorman,Ordinary
+WATER,Pirate Ship,Ordinary
+WATER,Polar Bears,Ordinary
+WATER,Porcupine Pufferfish,Ordinary
+WATER,Riptide,Ordinary
+WATER,Sea Serpent,Ordinary
+WATER,Sedge Crabs,Ordinary
+WATER,Sleep,Ordinary
+WATER,Swamp Buffalo,Ordinary
+WATER,Swan Maidens,Ordinary
+WATER,Tufted Turtles,Ordinary
+WATER,Wall of Ice,Ordinary
+WATER,Accursed Albatross,Exceptional
+WATER,Anui Undine,Exceptional
+WATER,Bridge Troll,Exceptional
+WATER,Brobdingnag Bullfrog,Exceptional
+WATER,Dodge Roll,Exceptional
+WATER,Felbog Frog Men,Exceptional
+WATER,Fey Changeling,Exceptional
+WATER,Flood,Exceptional
+WATER,Font of Life,Exceptional
+WATER,Frost Nova,Exceptional
+WATER,Geyser,Exceptional
+WATER,Giant Shark,Exceptional
+WATER,Guile Sirens,Exceptional
+WATER,Marine Voyage,Exceptional
+WATER,Mariner’s Curse,Exceptional
+WATER,Ormund Harpooneers,Exceptional
+WATER,Sea Raider,Exceptional
+WATER,Shrink,Exceptional
+WATER,Stormy Seas,Exceptional
+WATER,Tide Naiads,Exceptional
+WATER,Tringh Constrictor,Exceptional
+WATER,Unland Eel,Exceptional
+WATER,Upwelling,Exceptional
+WATER,Abundance,Elite
+WATER,Adept Illusionist,Elite
+WATER,Court Jester,Elite
+WATER,Diluvian Kraken,Elite
+WATER,Ghost Ship,Elite
+WATER,Megamoeba,Elite
+WATER,Polar Explorers,Elite
+WATER,Pollimorph,Elite
+WATER,Replication,Elite
+WATER,Seirawan Hydra,Elite
+WATER,Selfsame Simulacrum,Elite
+WATER,Silence,Elite
+WATER,Sneak Thief,Elite
+WATER,Unland Angler,Elite
+WATER,Wrath of the Sea,Elite
+WATER,Yokai Kappas,Elite
+WATER,Atlantean Fate,Unique
+WATER,Captain Baldassare,Unique
+WATER,Great Old One,Unique
+WATER,Lord of Unland,Unique
+WATER,Mother Nature,Unique
+WATER,Plague of Frogs,Unique
+WATER,Ruler of Thul,Unique
+WATER,Twist of Fate,Unique
+ARTIFACTS,Scarecrow,Ordinary
+ARTIFACTS,Wicker Manikin,Ordinary
+ARTIFACTS,Battering Ram,Exceptional
+ARTIFACTS,Buried Treasure,Exceptional
+ARTIFACTS,Crave Golem,Exceptional
+ARTIFACTS,Flaming Sword,Exceptional
+ARTIFACTS,Iron Shackles,Exceptional
+ARTIFACTS,Lucky Charm,Exceptional
+ARTIFACTS,Poisonous Dagger,Exceptional
+ARTIFACTS,Rolling Boulder,Exceptional
+ARTIFACTS,Siege Ballista,Exceptional
+ARTIFACTS,Sunken Treasure,Exceptional
+ARTIFACTS,Torshammar Trinket,Exceptional
+ARTIFACTS,Truesight Crossbow,Exceptional
+ARTIFACTS,Wings of Invention,Exceptional
+ARTIFACTS,All-terrain Vestments,Elite
+ARTIFACTS,Angel’s Egg,Elite
+ARTIFACTS,Belfry,Elite
+ARTIFACTS,Black Obelisk,Elite
+ARTIFACTS,Chains of Prometheus,Elite
+ARTIFACTS,Devil’s Egg,Elite
+ARTIFACTS,Drums of Doom,Elite
+ARTIFACTS,Land Deed,Elite
+ARTIFACTS,Maddening Bells,Elite
+ARTIFACTS,Magellan Globe,Elite
+ARTIFACTS,Magnetic Muzzle,Elite
+ARTIFACTS,Mask of Mayhem,Elite
+ARTIFACTS,Mix Aer,Elite
+ARTIFACTS,Mix Aqua,Elite
+ARTIFACTS,Mix Ignis,Elite
+ARTIFACTS,Mix Terra,Elite
+ARTIFACTS,Payload Trebuchet,Elite
+ARTIFACTS,Purge Juggernaut,Elite
+ARTIFACTS,Screaming Skull,Elite
+ARTIFACTS,Undertaker Engine,Elite
+ARTIFACTS,Amethyst Core,Unique
+ARTIFACTS,Aquamarine Core,Unique
+ARTIFACTS,Blasted Oak,Unique
+ARTIFACTS,Crown of the Victor,Unique
+ARTIFACTS,Doomsday Device,Unique
+ARTIFACTS,Gilded Aegis,Unique
+ARTIFACTS,Kythera Mekanism,Unique
+ARTIFACTS,Onyx Core,Unique
+ARTIFACTS,Orb of Ba’al Berith,Unique
+ARTIFACTS,Pendulum of Peril,Unique
+ARTIFACTS,Philosopher’s Stone,Unique
+ARTIFACTS,Pnakotic Manuscripts,Unique
+ARTIFACTS,Ruby Core,Unique
+ARTIFACTS,Seven-League Boots,Unique
+ARTIFACTS,Spear of Destiny,Unique
+ARTIFACTS,The Immortal Throne,Unique
+AVATARS,Avatar of Air,
+AVATARS,Avatar of Earth,
+AVATARS,Avatar of Fire,
+AVATARS,Avatar of Water,
+AVATARS,Battlemage,
+AVATARS,Deathspeaker,
+AVATARS,Elementalist,
+AVATARS,Enchantress,
+AVATARS,Flamecaller,
+AVATARS,Geomancer,
+AVATARS,Pathfinder,
+AVATARS,Seer,
+AVATARS,Sorcerer,
+AVATARS,Sparkmage,
+AVATARS,Waveshaper,
+SITES,Arid Desert,Ordinary
+SITES,Autumn River,Ordinary
+SITES,Dark Tower,Ordinary
+SITES,Gothic Tower,Ordinary
+SITES,Humble Village,Ordinary
+SITES,Lone Tower,Ordinary
+SITES,Red Desert,Ordinary
+SITES,Remote Desert,Ordinary
+SITES,Rustic Village,Ordinary
+SITES,Simple Village,Ordinary
+SITES,Spring River,Ordinary
+SITES,Summer River,Ordinary
+SITES,Aqueduct,Exceptional
+SITES,Bedrock,Exceptional
+SITES,Cornerstone,Exceptional
+SITES,Floodplain,Exceptional
+SITES,Free City,Exceptional
+SITES,Gnome Hollows,Exceptional
+SITES,Holy Ground,Exceptional
+SITES,Iceberg,Exceptional
+SITES,Lighthouse,Exceptional
+SITES,Mountain Pass,Exceptional
+SITES,Mudflow,Exceptional
+SITES,Oasis,Exceptional
+SITES,Quagmire,Exceptional
+SITES,Ruins,Exceptional
+SITES,Secret Tunnel,Exceptional
+SITES,Shifting Sands,Exceptional
+SITES,Steppe,Exceptional
+SITES,Undertow,Exceptional
+SITES,Updraft Ridge,Exceptional
+SITES,Vantage Hills,Exceptional
+SITES,Watchtower,Exceptional
+SITES,Windmill,Exceptional
+SITES,Astral Alcazar,Elite
+SITES,Battlefield,Elite
+SITES,Bottomless Pit,Elite
+SITES,Crossroads,Elite
+SITES,Dwarven Forge,Elite
+SITES,Edge of the World,Elite
+SITES,Imperial Road,Elite
+SITES,Island Leviathan,Elite
+SITES,Mirage,Elite
+SITES,Observatory,Elite
+SITES,Planar Gate,Elite
+SITES,Primordial Spring,Elite
+SITES,Rift Valley,Elite
+SITES,Sinkhole,Elite
+SITES,Standing Stones,Elite
+SITES,Boneyard,Unique
+SITES,Cloud City,Unique
+SITES,Dome of Osiros,Unique
+SITES,Donnybrook Inn,Unique
+SITES,Great Wall,Unique
+SITES,Kingdom of Agartha,Unique
+SITES,Maelström,Unique
+SITES,Mirror Realm,Unique
+SITES,Pillar of Zeiros,Unique
+SITES,Pristine Paradise,Unique
+SITES,River of Flame,Unique
+SITES,Roots of Yggdrasil,Unique
+SITES,Smokestacks of Gnaak,Unique
+SITES,Tadpole Pool,Unique
+SITES,The Colour Out of Space,Unique
+SITES,The Geistwood,Unique
+SITES,Vaults of Zul,Unique
+SITES,Vesuvius,Unique

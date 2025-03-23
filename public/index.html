@@ -8,37 +8,60 @@
 <body>
     <h1>WebSocket Client</h1>
     <div id="messages"></div>
-
-    <script>
-        // Create WebSocket connection.
-        const socket = new WebSocket('ws://localhost/ws'); // Match this URL to FastAPI WebSocket route
-
-        // Connection open
-        socket.onopen = function(event) {
-            console.log('Connected to WebSocket server!');
-            response = {"message": 'Hello from client!'}
-            socket.send(JSON.stringify(response));
-        };
-
-        // Receive message
-        socket.onmessage = function(event) {
-            data = JSON.parse(event.data)
-            console.log('Message from server:', data.message);
-            const messagesDiv = document.getElementById('messages');
-            const message = document.createElement('p');
-            message.textContent = `Server says: ${event.data}`;
-            messagesDiv.appendChild(message);
-        };
-
-        // Error handling
-        socket.onerror = function(event) {
-            console.error('WebSocket Error:', event);
-        };
-
-        // Close connection
-        socket.onclose = function(event) {
-            console.log('Disconnected from WebSocket server');
-        };
-    </script>
 </body>
 </html>
+
+<script>
+// Create WebSocket connection.
+const socket = new WebSocket('ws://localhost/ws'); // Match this URL to FastAPI WebSocket route
+
+// Connection open
+socket.onopen = function(event) {
+    console.log('Connected to WebSocket server!');
+    message = {'connect': 'host'}
+    socket.send(JSON.stringify(message));
+};
+
+// Receive message
+socket.onmessage = function(event) {
+    data = JSON.parse(event.data)
+
+    if (data.message) {
+        console.log('Message from server:', data.message);
+        const messagesDiv = document.getElementById('messages');
+        const message = document.createElement('p');
+        message.textContent = `Server says: ${event.data}`;
+        messagesDiv.appendChild(message);
+    }
+
+    if (data.state){
+        console.log("state update received")
+        console.log(data.state)
+        buildStage(data.state)
+    }
+};
+
+// Error handling
+socket.onerror = function(event) {
+    console.error('WebSocket Error:', event);
+};
+
+// Close connection
+socket.onclose = function(event) {
+    console.log('Disconnected from WebSocket server');
+};
+
+function buildStage(state){
+    prestring = "https://d27a44hjr9gen3.cloudfront.net/bet/"
+    poststring = "_b_f.png"
+    document.body.innerHTML = ""
+    state.draft_columns.forEach(col =>{
+        name = col[0].Name
+        name = name.replace(/ /g, "_");
+        name = name.replace(/-/g, "_");
+        name=name.toLowerCase()
+        link = prestring + name + poststring
+        document.body.innerHTML += "<br>" + "<img src='"+link+"'>"
+    })
+}
+</script>
