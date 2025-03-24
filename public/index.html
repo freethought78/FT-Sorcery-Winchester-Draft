@@ -3,65 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Client Test</title>
+    <title>Sorcery Winchester Cube Draft</title>
 </head>
 <body>
-    <h1>WebSocket Client</h1>
-    <div id="messages"></div>
+    <div id="stage">
+        <h1>Connecting to draft server...</h1>
+        <div id="messages"></div>
+    </div>
 </body>
 </html>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.3.1/sha256.min.js" integrity="sha512-qw5xqZrce8QejL/YnoVvHaXggvfJK3bP2rczgxPSL+JhACfJhOU6gG+/c1LFyRxIpwaF8pZlfwUXLIK+5EEiKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
-// Create WebSocket connection.
-const socket = new WebSocket('ws://localhost/ws'); // Match this URL to FastAPI WebSocket route
+    userID = new URLSearchParams(window.location.search).get("id")
+    secureID = hash(userID)
 
-// Connection open
-socket.onopen = function(event) {
-    console.log('Connected to WebSocket server!');
-    message = {'connect': 'host'}
-    socket.send(JSON.stringify(message));
-};
+    stage = document.getElementById('stage')
+    screen_width = window.innerWidth
+    screen_height = window.innerHeight
 
-// Receive message
-socket.onmessage = function(event) {
-    data = JSON.parse(event.data)
+    async function loadSorceryFont() {
+        const SorceryFont = new FontFace('SorceryFont', 'url(SorceryFont.ttf)');
 
-    if (data.message) {
-        console.log('Message from server:', data.message);
-        const messagesDiv = document.getElementById('messages');
-        const message = document.createElement('p');
-        message.textContent = `Server says: ${event.data}`;
-        messagesDiv.appendChild(message);
+        try {
+            await SorceryFont.load();
+            document.fonts.add(SorceryFont);
+            // Use the font
+            document.body.style.fontFamily = 'SorceryFont';
+        } catch (error) {
+            console.error('Error loading font:', error);
+        }
     }
 
-    if (data.state){
-        console.log("state update received")
-        console.log(data.state)
-        buildStage(data.state)
+    loadSorceryFont();
+
+    //if the user is on another page, they might miss a state update, reload the page on page focus to stay up to date
+    window.addEventListener('focus', (event) => {
+        window.location.reload();
+    });
+
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://localhost/ws'); // Match this URL to FastAPI WebSocket route
+
+    // Connection open
+    socket.onopen = function(event) {
+        console.log('Connecting to draft server...');
+        message = {'connect': userID}
+        socket.send(JSON.stringify(message));
+    };
+
+    // Receive message
+    socket.onmessage = function(event) {
+        data = JSON.parse(event.data)
+
+        if (data.message) {
+            console.log('Message from server:', data.message);
+            const messagesDiv = document.getElementById('messages');
+            const message = document.createElement('p');
+            message.textContent = `Server says: ${event.data}`;
+            messagesDiv.appendChild(message);
+        }
+
+        if (data.state){
+            console.log("state update received")
+            console.log(data.state)
+            buildStage(data.state)
+        }
+    };
+
+    // Error handling
+    socket.onerror = function(event) {
+        console.error('WebSocket Error:', event);
+    };
+
+    // Close connection
+    socket.onclose = function(event) {
+        console.log('Disconnected from WebSocket server');
+    };
+
+    function buildStage(state){
+        if(state.phase == "configuration") configurationScreen(state)
+        if(state.phase == "draft") draftScreen(state)
     }
-};
 
-// Error handling
-socket.onerror = function(event) {
-    console.error('WebSocket Error:', event);
-};
+    function draftScreen(state){
+        stage.innerHTML = ""
+        card_width = screen_width / 10
+        card_padding = card_width / 4
 
-// Close connection
-socket.onclose = function(event) {
-    console.log('Disconnected from WebSocket server');
-};
+        stage.innerHTML += `<img width=${card_width * 2}px id="card_preview" style="float:right; padding: ${card_padding * 2}px">`
 
-function buildStage(state){
-    prestring = "https://d27a44hjr9gen3.cloudfront.net/bet/"
-    poststring = "_b_f.png"
-    document.body.innerHTML = ""
-    state.draft_columns.forEach(col =>{
-        name = col[0].Name
-        name = name.replace(/ /g, "_");
-        name = name.replace(/-/g, "_");
-        name=name.toLowerCase()
-        link = prestring + name + poststring
-        document.body.innerHTML += "<br>" + "<img src='"+link+"'>"
-    })
-}
+        prestring = "https://d27a44hjr9gen3.cloudfront.net/bet/"
+        poststring = "_b_s.png"
+
+
+        state.draft_columns.forEach(col =>{
+            name = col[0].Name
+            name = name.replace(/ /g, "_");
+            name = name.replace(/-/g, "_");
+            name=name.toLowerCase()
+            link = prestring + name + poststring
+            stage.innerHTML += `<img src="${link}" width=${card_width}px style="padding: ${card_padding}px" onmouseover="document.getElementById('card_preview').src = '${link}'">`
+        })
+
+
+    }
+
+    function configurationScreen(state){
+        stage.innerHTML = ""
+        stage.innerHTML += "<h1> Configuration placeholder</h1>"
+        stage.innerHTML += "<h2>Cube Size: <input id='cube_size_input' value='120'></input>"
+        stage.innerHTML += "<button id='finish_configuration_button'>Done</button>"
+
+        finish_configuration_button = document.getElementById("finish_configuration_button")
+        cube_size_input = document.getElementById("cube_size_input")
+
+        finish_configuration_button.onclick = ()=>{
+            message = {}
+            message.config_data = {
+                cube_size: cube_size_input.value,
+                user: secureID
+            }
+
+            message = JSON.stringify(message)
+            socket.send(message)
+        }
+    }
+
+    function hash(id){
+        var sha256 = new jsSHA('SHA-256', 'TEXT');
+        sha256.update(id);
+        return sha256.getHash("HEX");
+    }
+
 </script>
+<style>
+    body{
+        color: #386dff;
+        background-image: linear-gradient(to bottom, #010002, #06000e, #090016, #0c001d, #0b0024, #0a0129, #08012e, #040233, #030437, #02063b, #010840, #000944);
+        overflow: hidden;
+    }
+    #stage{
+        height: 100vh;
+    }
+</style>

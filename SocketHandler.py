@@ -1,26 +1,43 @@
 import os
 import sys
-from csv import DictReader
+import string
 import random
-
+import urllib.request
+from csv import DictReader
+from hashlib import sha256
 
 def handle(data):
     key = next(iter(data))
     value = data[key]
 
-    message = {"message": "Hello from server!"}
+    if key == 'connect':
+        message = {'state': draft.state}
+        return message
 
-    if key == 'connect': message = {'state': draft.state}
+    if key == 'config_data':
+        if value['user'] == draft.secure_hostID:
+            draft.generate_cube(draft.master_card_list, int(value['cube_size']))
+            draft.initialize_draft_state()
 
-    #print("this is the data we got: " + data["message"])
-    return message
+            message = {'state': draft.state}
+            return message
+
+        else: print('invalid config change attempt detected')
 
 class Draft:
     def __init__(self):
         self.master_card_list = self.load_cards()
-        self.cube = self.generate_cube(self.master_card_list)
-        self.state = self.initializeDraftState()
-        self.next_draft_round()
+        self.cube = []
+        self.phase = 'configuration'
+        self.IP = self.get_external_ip()
+        self.hostID = self.generate_ID()
+        self.clientID = self.generate_ID()
+        self.secure_hostID = sha256(self.hostID.encode('utf-8')).hexdigest()
+        self.secure_clientID = sha256(self.clientID.encode('utf-8')).hexdigest()
+        self.turn = self.secure_hostID
+        self.state = {
+            'phase': 'configuration'
+        }
 
     def load_cards(self):
         # Determine base path
@@ -36,19 +53,35 @@ class Draft:
             master_card_list = list(dict_reader)
             return master_card_list
 
-    def generate_cube(self, card_list):
-        cube = random.choices(card_list, k=100)
-        return cube
+    def generate_cube(self, card_list, cube_size):
+        self.cube = random.choices(card_list, k=cube_size)
 
     def next_draft_round(self):
         for col in self.state['draft_columns']:
             col.append(self.cube.pop())
 
-    def initializeDraftState(self):
-        state = {}
-        state['draft_columns'] = [[],[],[],[]]
-        return state
+    def initialize_draft_state(self):
+        self.phase = 'draft'
+        state = {
+            'draft_columns': [[], [], [], []],
+            'phase': self.phase,
+            'host': self.secure_hostID,
+            'client': self.secure_clientID,
+            'turn': self.secure_hostID
+        }
+        self.turn = self.secure_hostID
+        self.state = state
+        self.next_draft_round()
+
+
+    def get_external_ip(self):
+        return urllib.request.urlopen('https://ident.me').read().decode('utf8')
+
+    def generate_ID(self, size=6):
+        return ''.join(random.choices(string.ascii_letters, k=size))
 
 
 draft = Draft()
-print(draft.state)
+print (draft.secure_hostID)
+os.system(f'explorer "http://{draft.IP}?id={draft.hostID}"')
+
