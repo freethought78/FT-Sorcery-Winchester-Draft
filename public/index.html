@@ -90,23 +90,29 @@
     function draftScreen(state){
         stage.innerHTML = ""
         card_width = screen_width / 10
-        card_padding = card_width / 4
+        card_margin = card_width / 4
 
-        stage.innerHTML += `<img width=${card_width * 2}px id="card_preview" style="float:right; padding: ${card_padding * 2}px">`
+        stage.innerHTML += `<img width=${card_width * 2}px id="card_preview" style="float:right; padding: ${card_margin * 2}px">`
 
         prestring = "https://d27a44hjr9gen3.cloudfront.net/bet/"
         poststring = "_b_s.png"
 
 
-        state.draft_columns.forEach(col =>{
-            name = col[0].Name
-            name = name.replace(/ /g, "_");
-            name = name.replace(/-/g, "_");
-            name=name.toLowerCase()
-            link = prestring + name + poststring
-            stage.innerHTML += `<img src="${link}" width=${card_width}px style="padding: ${card_padding}px" onmouseover="document.getElementById('card_preview').src = '${link}'">`
-        })
-
+        for (var col_num = 0; col_num < state.draft_columns.length; col_num++){
+            var col = state.draft_columns[col_num]
+            col_id = "draft_column" + col_num
+            stage.innerHTML += `<div class="draft_column" id="${col_id}"></div>`
+            var col_div = document.getElementById(col_id)
+                for(var card_num = 0; card_num < state.draft_columns[col_num].length; card_num++){
+                    name = col[card_num].Name
+                    name = name.replace(/ /g, "_");
+                    name = name.replace(/-/g, "_");
+                    name=name.toLowerCase()
+                    link = prestring + name + poststring
+                    col_div.innerHTML += `<img src="${link}" width=${card_width}px style="margin: ${card_margin}px; top: ${card_num*card_margin}px; position:absolute;" onmouseover="document.getElementById('card_preview').src = '${link}'">`
+                }
+            //stage.innerHTML +=
+        }
 
     }
 
@@ -143,8 +149,15 @@
         color: #386dff;
         background-image: linear-gradient(to bottom, #010002, #06000e, #090016, #0c001d, #0b0024, #0a0129, #08012e, #040233, #030437, #02063b, #010840, #000944);
         overflow: hidden;
+        margin: 0px;
     }
     #stage{
         height: 100vh;
+        width: 100%;
+    }
+    .draft_column{
+        width: 15%;
+        height: 100%;
+        display: inline-block;
     }
 </style>

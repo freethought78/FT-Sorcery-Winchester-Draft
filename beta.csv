@@ -179,14 +179,14 @@ FIRE,Swiven Scout,Exceptional
 FIRE,Tvinnax Berserker,Exceptional
 FIRE,Wayfaring Pilgrim,Exceptional
 FIRE,Wildfire,Exceptional
-FIRE,Wills-o’-the-Wisp,Exceptional
+FIRE,Wills-o-the-Wisp,Exceptional
 FIRE,Ancient Dragon,Elite
 FIRE,Askelon Phoenix,Elite
 FIRE,Bull Demons of Adum,Elite
 FIRE,Disintegrate,Elite
 FIRE,Far East Assassin,Elite
 FIRE,Flame Wave,Elite
-FIRE,Grösse Poltergeist,Elite
+FIRE,Grosse Poltergeist,Elite
 FIRE,Infernal Legion,Elite
 FIRE,Infiltrate,Elite
 FIRE,Karkemish Chimera,Elite
@@ -197,7 +197,7 @@ FIRE,Panorama Manticore,Elite
 FIRE,Scorched Earth,Elite
 FIRE,Seasoned Sellsword,Elite
 FIRE,Cerberus in Chains,Unique
-FIRE,Courtesan Thaïs,Unique
+FIRE,Courtesan Thais,Unique
 FIRE,Death Dealer,Unique
 FIRE,Doomsday Prophet,Unique
 FIRE,Immolation,Unique
@@ -210,7 +210,7 @@ WATER,Deep-Sea Mermaids,Ordinary
 WATER,Drown,Ordinary
 WATER,Extinguish,Ordinary
 WATER,Fenvale Muse,Ordinary
-WATER,Fire Harpoons!,Ordinary
+WATER,Fire Harpoons,Ordinary
 WATER,Ice Lance,Ordinary
 WATER,Muck Lampreys,Ordinary
 WATER,Old Salt Anchorman,Ordinary
@@ -288,11 +288,11 @@ ARTIFACTS,Torshammar Trinket,Exceptional
 ARTIFACTS,Truesight Crossbow,Exceptional
 ARTIFACTS,Wings of Invention,Exceptional
 ARTIFACTS,All-terrain Vestments,Elite
-ARTIFACTS,Angel’s Egg,Elite
+ARTIFACTS,Angels Egg,Elite
 ARTIFACTS,Belfry,Elite
 ARTIFACTS,Black Obelisk,Elite
 ARTIFACTS,Chains of Prometheus,Elite
-ARTIFACTS,Devil’s Egg,Elite
+ARTIFACTS,Devils Egg,Elite
 ARTIFACTS,Drums of Doom,Elite
 ARTIFACTS,Land Deed,Elite
 ARTIFACTS,Maddening Bells,Elite
@@ -393,7 +393,7 @@ SITES,Dome of Osiros,Unique
 SITES,Donnybrook Inn,Unique
 SITES,Great Wall,Unique
 SITES,Kingdom of Agartha,Unique
-SITES,Maelström,Unique
+SITES,Maelstrom,Unique
 SITES,Mirror Realm,Unique
 SITES,Pillar of Zeiros,Unique
 SITES,Pristine Paradise,Unique

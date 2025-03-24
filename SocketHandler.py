@@ -72,6 +72,8 @@ class Draft:
         self.turn = self.secure_hostID
         self.state = state
         self.next_draft_round()
+        self.next_draft_round()
+        self.next_draft_round()
 
 
     def get_external_ip(self):
