@@ -15,7 +15,7 @@ def handle(data):
         return message
 
     if key == 'config_data':
-        if value['user'] == draft.secure_hostID:
+        if value['user'] == draft.hostID:
             draft.generate_cube(draft.master_card_list, int(value['cube_size']))
             draft.initialize_draft_state()
 
@@ -23,6 +23,10 @@ def handle(data):
             return message
 
         else: print('invalid config change attempt detected')
+
+def get_hash(un_hashed):
+    return sha256(un_hashed.encode('utf-8')).hexdigest()
+
 
 class Draft:
     def __init__(self):
@@ -32,8 +36,8 @@ class Draft:
         self.IP = self.get_external_ip()
         self.hostID = self.generate_ID()
         self.clientID = self.generate_ID()
-        self.secure_hostID = sha256(self.hostID.encode('utf-8')).hexdigest()
-        self.secure_clientID = sha256(self.clientID.encode('utf-8')).hexdigest()
+        self.secure_hostID = get_hash(self.hostID)
+        self.secure_clientID = get_hash(self.clientID)
         self.turn = self.secure_hostID
         self.state = {
             'phase': 'configuration'
