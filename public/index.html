@@ -14,6 +14,9 @@
 </html>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.3.1/sha256.min.js" integrity="sha512-qw5xqZrce8QejL/YnoVvHaXggvfJK3bP2rczgxPSL+JhACfJhOU6gG+/c1LFyRxIpwaF8pZlfwUXLIK+5EEiKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="WebsocketHandler.js"></script>
+<script src="ConfigurationScreen.js"></script>
+<script src="DraftScreen.js"></script>
 
 <script>
     userID = new URLSearchParams(window.location.search).get("id")
@@ -48,123 +51,10 @@
         window.location.reload();
     });
 
-    // Create WebSocket connection.
-    const socket = new WebSocket('ws://localhost/ws'); // Match this URL to FastAPI WebSocket route
-
-    // Connection open
-    socket.onopen = function(event) {
-        console.log('Connecting to draft server...');
-        message = {'connect': userID}
-        socket.send(JSON.stringify(message));
-    };
-
-    // Receive message
-    socket.onmessage = function(event) {
-        data = JSON.parse(event.data)
-
-        if (data.message) {
-            console.log('Message from server:', data.message);
-            const messagesDiv = document.getElementById('messages');
-            const message = document.createElement('p');
-            message.textContent = `Server says: ${event.data}`;
-            messagesDiv.appendChild(message);
-        }
-
-        if (data.state){
-            console.log("state update received")
-            console.log(data.state)
-            buildStage(data.state)
-        }
-    };
-
-    // Error handling
-    socket.onerror = function(event) {
-        console.error('WebSocket Error:', event);
-    };
-
-    // Close connection
-    socket.onclose = function(event) {
-        console.log('Disconnected from WebSocket server');
-    };
-
     function buildStage(state){
         if(state.phase == "configuration") configurationScreen(state)
         if(state.phase == "draft") draftScreen(state)
     }
-
-    function draftScreen(state){
-        stage.innerHTML = ""
-
-        //card properties
-        card_width = screen_width / 10
-        card_margin = card_width / 4
-
-        //card preview div
-        stage.innerHTML += `<img width=${card_width * 2}px id="card_preview" style="float:right; padding: ${card_margin * 2}px">`
-
-        //draft status message div
-        stage.innerHTML += `<div id="status_message" width=100% style="font-size: 50px; margin: 30px; position: absolute; bottom: 0px"></div>`
-
-        //card image url formatting
-        prestring = "https://d27a44hjr9gen3.cloudfront.net/bet/"
-        poststring = "_b_s.png"
-
-        //use information from draft state received from server and place all card images into their correct columns, laid out on the stage
-        for (var col_num = 0; col_num < state.draft_columns.length; col_num++){
-            var col = state.draft_columns[col_num]
-            col_id = "draft_column" + col_num
-            stage.innerHTML += `<div class="draft_column" id="${col_id}"></div>`
-            var col_div = document.getElementById(col_id)
-            for(var card_num = 0; card_num < state.draft_columns[col_num].length; card_num++){
-                name = clean_string(col[card_num].Name)
-
-                link = prestring + name + poststring
-                col_div.innerHTML += `<img src="${link}" width=${card_width}px style="margin: ${card_margin}px; top: ${card_num*card_margin}px; position:absolute;" onmouseover="document.getElementById('card_preview').src = '${link}'">`
-            }
-        }
-
-        //update status message
-        status_message_div = document.getElementById('status_message')
-        if (state.turn == secureID){
-            status_message_div.innerHTML = "Select a column to draft."
-        } else {
-            status_message_div.innerHTML = "Your opponent is making a selection."
-        }
-    }
-
-    function configurationScreen(state){
-        stage.innerHTML = ""
-        stage.innerHTML += "<h1> Configuration placeholder</h1>"
-        stage.innerHTML += "<h2>Cube Size: <input id='cube_size_input' value='120'></input>"
-        stage.innerHTML += "<button id='finish_configuration_button'>Done</button>"
-
-        finish_configuration_button = document.getElementById("finish_configuration_button")
-        cube_size_input = document.getElementById("cube_size_input")
-
-        finish_configuration_button.onclick = ()=>{
-            message = {}
-            message.config_data = {
-                cube_size: cube_size_input.value,
-                user: userID
-            }
-
-            message = JSON.stringify(message)
-            socket.send(message)
-        }
-    }
-
-function clean_string(input) {
-    console.log(input)
-    input = input.replace(/ /g, "_");
-    input = input.replace(/-/g, "_");
-    input = input.replace(/’/g, "");
-    input = input.toLowerCase()
-    // Remove accents from characters
-    normalized = input.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
-
-    console.log(normalized)
-    return normalized
-}
 
     function hash(id){
         var sha256 = new jsSHA('SHA-256', 'TEXT');
@@ -183,10 +73,5 @@ function clean_string(input) {
     #stage{
         height: 100vh;
         width: 100%;
-    }
-    .draft_column{
-        width: 15%;
-        height: 100%;
-        display: inline-block;
     }
 </style>
