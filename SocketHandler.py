@@ -6,6 +6,7 @@ import urllib.request
 from csv import DictReader
 from hashlib import sha256
 
+
 def handle(data):
     key = next(iter(data))
     value = data[key]
@@ -24,6 +25,16 @@ def handle(data):
 
         else: print('invalid config change attempt detected')
 
+    if key == 'select_column':
+        if value['user'] == draft.turn:
+            if value['user'] == draft.hostID: target = draft.host_cards
+            else: target = draft.client_cards
+            source = draft.state['draft_columns'][value['column']]
+            target.extend(source)
+            source.clear()
+            return draft.next_draft_round()
+
+
 def get_hash(un_hashed):
     return sha256(un_hashed.encode('utf-8')).hexdigest()
 
@@ -31,6 +42,8 @@ def get_hash(un_hashed):
 class Draft:
     def __init__(self):
         self.master_card_list = self.load_cards()
+        self.host_cards = []
+        self.client_cards = []
         self.cube = []
         self.phase = 'configuration'
         self.IP = self.get_external_ip()
@@ -38,7 +51,7 @@ class Draft:
         self.clientID = self.generate_ID()
         self.secure_hostID = get_hash(self.hostID)
         self.secure_clientID = get_hash(self.clientID)
-        self.turn = self.secure_hostID
+        self.turn = self.hostID
         self.state = {
             'phase': 'configuration'
         }
@@ -63,6 +76,14 @@ class Draft:
     def next_draft_round(self):
         for col in self.state['draft_columns']:
             col.append(self.cube.pop())
+        if self.turn == self.hostID:
+            self.turn = self.clientID
+            self.state['turn'] = self.secure_clientID
+        else:
+            self.turn = self.hostID
+            self.state['turn'] = self.secure_hostID
+
+        return {"state": self.state}
 
     def initialize_draft_state(self):
         self.phase = 'draft'
@@ -71,19 +92,11 @@ class Draft:
             'phase': self.phase,
             'host': self.secure_hostID,
             'client': self.secure_clientID,
-            'turn': self.secure_hostID
+            'turn': self.secure_clientID
         }
-        self.turn = self.secure_hostID
+        self.turn = self.clientID
         self.state = state
         self.next_draft_round()
-        self.next_draft_round()
-        self.next_draft_round()
-        self.next_draft_round()
-        self.next_draft_round()
-        self.next_draft_round()
-        self.next_draft_round()
-        self.next_draft_round()
-
 
     def get_external_ip(self):
         return urllib.request.urlopen('https://ident.me').read().decode('utf8')

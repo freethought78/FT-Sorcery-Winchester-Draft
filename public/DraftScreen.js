@@ -35,7 +35,7 @@ function draftScreen(state){
                     width=${card_width}px
                     style="margin: ${card_margin}px; top: ${card_num*card_margin}px; position:absolute;"
                     onmouseover="document.getElementById('card_preview').src = '${link}'"
-                    onclick="select_column(${col_num}, ${col_id})"
+                    onclick="select_column(${col_num}, '${state.turn}')"
                 >`
         }
     }
@@ -61,8 +61,17 @@ function draftScreen(state){
 }
 
 //click event for columns
-function select_column(col_num, col_id){
+function select_column(col_num, turn){
     console.log(`Column ${col_num} selected`)
+    if(turn == secureID){
+        var socket_message = {
+            "select_column": {
+                "user": userID,
+                "column": col_num
+            }
+        }
+        socket.send(JSON.stringify(socket_message))
+    }
 }
 
 function clean_string(input) {
