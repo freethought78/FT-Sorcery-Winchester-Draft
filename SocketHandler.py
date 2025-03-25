@@ -52,7 +52,7 @@ class Draft:
 
         csv_path = os.path.join(base_path, 'beta.csv')  # Ensure correct path
 
-        with open(csv_path, 'r') as f:
+        with open(csv_path, 'r', encoding='utf-8') as f:
             dict_reader = DictReader(f)
             master_card_list = list(dict_reader)
             return master_card_list
@@ -75,6 +75,11 @@ class Draft:
         }
         self.turn = self.secure_hostID
         self.state = state
+        self.next_draft_round()
+        self.next_draft_round()
+        self.next_draft_round()
+        self.next_draft_round()
+        self.next_draft_round()
         self.next_draft_round()
         self.next_draft_round()
         self.next_draft_round()

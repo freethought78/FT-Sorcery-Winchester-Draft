@@ -116,10 +116,8 @@
             stage.innerHTML += `<div class="draft_column" id="${col_id}"></div>`
             var col_div = document.getElementById(col_id)
             for(var card_num = 0; card_num < state.draft_columns[col_num].length; card_num++){
-                name = col[card_num].Name
-                name = name.replace(/ /g, "_");
-                name = name.replace(/-/g, "_");
-                name = name.toLowerCase()
+                name = clean_string(col[card_num].Name)
+
                 link = prestring + name + poststring
                 col_div.innerHTML += `<img src="${link}" width=${card_width}px style="margin: ${card_margin}px; top: ${card_num*card_margin}px; position:absolute;" onmouseover="document.getElementById('card_preview').src = '${link}'">`
             }
@@ -154,6 +152,19 @@
             socket.send(message)
         }
     }
+
+function clean_string(input) {
+    console.log(input)
+    input = input.replace(/ /g, "_");
+    input = input.replace(/-/g, "_");
+    input = input.replace(/’/g, "");
+    input = input.toLowerCase()
+    // Remove accents from characters
+    normalized = input.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+
+    console.log(normalized)
+    return normalized
+}
 
     function hash(id){
         var sha256 = new jsSHA('SHA-256', 'TEXT');
