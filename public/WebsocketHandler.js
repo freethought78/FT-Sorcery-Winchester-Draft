@@ -4,7 +4,10 @@ const socket = new WebSocket('ws://localhost/ws'); // Match this URL to FastAPI 
 // Connection open
 socket.onopen = function(event) {
     console.log('Connecting to draft server...');
-    message = {'connect': userID}
+    message = {'connect': {
+        'user': userID
+        }
+    }
     socket.send(JSON.stringify(message));
 };
 

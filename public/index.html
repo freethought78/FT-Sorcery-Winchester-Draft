@@ -17,6 +17,7 @@
 <script src="WebsocketHandler.js"></script>
 <script src="ConfigurationScreen.js"></script>
 <script src="DraftScreen.js"></script>
+<script src="AwaitClientScreen.js"></script>
 
 <script>
     userID = new URLSearchParams(window.location.search).get("id")
@@ -54,6 +55,7 @@
     function buildStage(state){
         if(state.phase == "configuration") configurationScreen(state)
         if(state.phase == "draft") draftScreen(state)
+        if(state.phase == "await_client") awaitClientScreen(state)
     }
 
     function hash(id){

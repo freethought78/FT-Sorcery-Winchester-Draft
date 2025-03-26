@@ -12,14 +12,18 @@ def handle(data):
     value = data[key]
 
     if key == 'connect':
+        if value['user'] == draft.clientID and draft.phase == 'await_client':
+            print('guest connected')
+            draft.initialize_draft_state()
         message = {'state': draft.state}
         return message
 
     if key == 'config_data':
         if value['user'] == draft.hostID:
-            draft.generate_cube(draft.master_card_list, int(value['cube_size']))
-            draft.initialize_draft_state()
-
+            draft.cube_size = int(value['cube_size'])
+            draft.set_phase('await_client')
+            draft.state['clientID'] = draft.clientID
+            draft.state['IP'] = draft.IP
             message = {'state': draft.state}
             return message
 
@@ -45,16 +49,16 @@ class Draft:
         self.host_cards = []
         self.client_cards = []
         self.cube = []
-        self.phase = 'configuration'
+        self.cube_size = 0
         self.IP = self.get_external_ip()
         self.hostID = self.generate_ID()
         self.clientID = self.generate_ID()
         self.secure_hostID = get_hash(self.hostID)
         self.secure_clientID = get_hash(self.clientID)
         self.turn = self.hostID
-        self.state = {
-            'phase': 'configuration'
-        }
+        self.state = {}
+        self.set_phase('configuration')
+
 
     def load_cards(self):
         # Determine base path
@@ -86,17 +90,22 @@ class Draft:
         return {"state": self.state}
 
     def initialize_draft_state(self):
-        self.phase = 'draft'
+        draft.generate_cube(draft.master_card_list, draft.cube_size)
         state = {
             'draft_columns': [[], [], [], []],
-            'phase': self.phase,
             'host': self.secure_hostID,
             'client': self.secure_clientID,
             'turn': self.secure_clientID
         }
+
         self.turn = self.clientID
         self.state = state
+        self.set_phase('draft')
         self.next_draft_round()
+
+    def set_phase(self, phase):
+        self.phase = phase
+        self.state['phase'] = self.phase
 
     def get_external_ip(self):
         return urllib.request.urlopen('https://ident.me').read().decode('utf8')
