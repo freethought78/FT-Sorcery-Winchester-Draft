@@ -42,9 +42,17 @@
 
     loadSorceryFont();
 
+    var inactive_tab_interval
+
     //if the user is on another page, they might miss a state update, reload the page on page focus to stay up to date
     window.addEventListener('focus', (event) => {
-        window.location.reload();
+        clearInterval(inactive_tab_interval)
+    });
+
+    window.addEventListener('blur', (event) => {
+        inactive_tab_interval = setInterval(()=>{
+            requestStateUpdate()
+        }, 1000)
     });
 
     //reload page on resize

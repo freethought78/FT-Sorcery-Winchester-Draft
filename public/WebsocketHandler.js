@@ -38,3 +38,11 @@ socket.onerror = function(event) {
 socket.onclose = function(event) {
     console.log('Disconnected from WebSocket server');
 };
+
+function requestStateUpdate(){
+    message = {'connect': {
+        'user': userID
+        }
+    }
+    socket.send(JSON.stringify(message));
+}
