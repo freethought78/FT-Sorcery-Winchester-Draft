@@ -3,6 +3,7 @@ import sys
 import string
 import random
 import urllib.request
+import json
 from csv import DictReader
 from hashlib import sha256
 
@@ -42,6 +43,11 @@ def handle(data):
 def get_hash(un_hashed):
     return sha256(un_hashed.encode('utf-8')).hexdigest()
 
+#this makes sure that file paths work when running from source and when running from a pyinstaller package
+if getattr(sys, 'frozen', False):
+    base_path = sys._MEIPASS  # Running as a bundled executable
+else:
+    base_path = os.path.abspath(os.path.dirname(__file__))  # Running as a script
 
 class Draft:
     def __init__(self):
@@ -59,20 +65,33 @@ class Draft:
         self.state = {}
         self.set_phase('configuration')
 
-
     def load_cards(self):
-        # Determine base path
-        if getattr(sys, 'frozen', False):
-            base_path = sys._MEIPASS  # Running as a bundled executable
-        else:
-            base_path = os.path.abspath(os.path.dirname(__file__))  # Running as a script
+        path = os.path.join(base_path, 'Alpha-Beta.json')
+        with open(path, 'r+', encoding='utf-8') as f:
+            card_list = json.load(f)
+            master_card_list = []
+            for card in card_list['spellbook']: master_card_list.append(card)
+            for card in card_list['atlas']: master_card_list.append(card)
+            for card in card_list['sideboard']: master_card_list.append(card)
 
-        csv_path = os.path.join(base_path, 'beta.csv')  # Ensure correct path
+            for card in master_card_list:
+                if card['name'] == 'Sorcerer': card['src'] = card['src'].replace('/alp/', '/bet/')
+                if '/alp/' in card['src']: card['set'] = 'alpha'
+                if '/bet/' in card['src']: card['set'] = 'beta'
 
-        with open(csv_path, 'r', encoding='utf-8') as f:
-            dict_reader = DictReader(f)
-            master_card_list = list(dict_reader)
-            return master_card_list
+        path = os.path.join(base_path, 'Arthurian Legends.json')
+        with open(path, 'r+', encoding='utf-8') as f:
+            for card in card_list['spellbook']:
+                card['set'] = 'arthurian legends'
+                master_card_list.append(card)
+            for card in card_list['atlas']:
+                card['set'] = 'arthurian legends'
+                master_card_list.append(card)
+            for card in card_list['sideboard']:
+                card['set'] = 'arthurian legends'
+                master_card_list.append(card)
+
+        return master_card_list
 
     def generate_cube(self, card_list, cube_size):
         self.cube = random.choices(card_list, k=cube_size)

@@ -26,9 +26,10 @@ function draftScreen(state){
         var col_div = document.getElementById(col_id)
         for(var card_num = 0; card_num < state.draft_columns[col_num].length; card_num++){
             //attempt to sanitize the card name for conversion to image filename
-            name = clean_string(col[card_num].Name)
+            name = col[card_num].name
+            console.log(col)
             //construct the image url
-            link = prestring + name + poststring
+            link = col[card_num].src
             //add the card image
             col_div.innerHTML += `<img
                     src="${link}"

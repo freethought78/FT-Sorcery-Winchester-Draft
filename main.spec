@@ -1,8 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 datas = [
-    ('public', 'public'),  # Keep the public folder
-    ('beta.csv', '.')  # Ensure beta.csv is included in the package
+    ('public', 'public'),  # html folder
+    ('*.json', '.')  # card data
 ]
 
 a = Analysis(

@@ -4,7 +4,6 @@ import uvicorn
 import SocketHandler
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
-from starlette.responses import FileResponse
 
 app = FastAPI()
 
