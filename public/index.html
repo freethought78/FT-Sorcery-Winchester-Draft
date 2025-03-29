@@ -71,25 +71,25 @@ var pubip = "";
 
 var urlParams = new URLSearchParams(window.location.search);
 var session = urlParams.get('session');
-console.log(session)
+var key = session.slice(0,32)
+var value = session.slice(32)
 
 if(session){
-    var decrypted = decrypt(session);
-    ip = decrypted.slice(256)
-    pubip = ip
-    addscripts(ip)
-    console.log('Decrypted:', ip);
+    var decrypted = decrypt(value, key);
+    data = decrypted.slice(256)
+    pubip = data
+    addscripts(pubip)
 }
 
-function decrypt(encoded) {
+function decrypt(encoded, key) {
     encoded = encoded.replace(/-/g, '+').replace(/_/g, '/');  // Convert URL-safe Base64 back to normal Base64
     while (encoded.length % 4 !== 0) encoded += '=';  // Add padding if needed
     let decrypted = atob(encoded);
-    return xorEncrypt(decrypted);
+    return xorEncrypt(decrypted, key);
 }
 
-function xorEncrypt(ip, key = "secretkey") {
-    return Array.from(ip, (c, i) => String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))).join("");
+function xorEncrypt(data, key) {
+    return Array.from(data, (c, i) => String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))).join("");
 }
 
 

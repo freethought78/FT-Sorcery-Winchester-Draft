@@ -63,7 +63,8 @@ class Draft:
 
     def generate_session(self):
         session = self.generate_ID(256)
-        session = SessionData.encrypt(session+self.IP)
+        key = self.generate_ID(32)
+        session = key + SessionData.encrypt(session+self.IP, key)
         self.state['session'] = session
         print(session)
         return session
