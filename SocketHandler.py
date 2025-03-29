@@ -5,9 +5,7 @@ import random
 import urllib.request, urllib.parse
 import json
 import webbrowser
-
 import SessionData
-
 
 def handle(data):
     key = next(iter(data))
@@ -59,13 +57,21 @@ class Draft:
         self.turn = self.hostID
         self.state = {}
         self.set_phase('configuration')
-        self.session = self.generate_session()
+        self.generate_session()
 
     def generate_session(self):
-        session = self.generate_ID(256)
+
+
+        client_data = json.dumps({"IP": self.IP, "ID": self.clientID})
+        host_data = json.dumps({"IP": self.IP, "ID": self.hostID})
+
         key = self.generate_ID(32)
-        session = key + SessionData.encrypt(session+self.IP, key)
-        self.state['session'] = session
+        session = self.generate_ID(256)
+        self.client_session = key + SessionData.encrypt(session+client_data, key)
+        key = self.generate_ID(32)
+        session = self.generate_ID(256)
+        self.host_session = key + SessionData.encrypt(session+host_data, key)
+        self.state['session'] = self.client_session
         print(session)
         return session
 
@@ -140,5 +146,5 @@ class Draft:
 
 
 draft = Draft()
-url = f"http://{draft.IP}?session={draft.session}&id={draft.hostID}"
+url = f"http://{draft.IP}?session={draft.host_session}"
 webbrowser.open(url)

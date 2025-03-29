@@ -13,53 +13,11 @@
 </html>
 
 <script>
-userID = new URLSearchParams(window.location.search).get("id")
 
-stage = document.getElementById('stage')
-screen_width = window.innerWidth
-screen_height = window.innerHeight
 
-async function loadSorceryFont() {
-	const SorceryFont = new FontFace('SorceryFont', 'url(http://173.168.139.242/SorceryFont.ttf)');
-
-	try {
-		await SorceryFont.load();
-		document.fonts.add(SorceryFont);
-		// Use the font
-		document.body.style.fontFamily = 'SorceryFont';
-	} catch (error) {
-		console.error('Error loading font:', error);
-	}
-}
-
-loadSorceryFont();
-
-var inactive_tab_interval
-
-//if the user is on another page, they might miss a state update, reload the page on page focus to stay up to date
-window.addEventListener('focus', (event) => {
-	clearInterval(inactive_tab_interval)
-});
-
-window.addEventListener('blur', (event) => {
-	inactive_tab_interval = setInterval(()=>{
-		requestStateUpdate()
-	}, 1000)
-});
-
-//reload page on resize
-window.addEventListener('resize', (event) => {
-	window.location.reload();
-});
-
-function buildStage(state){
-	if(state.phase == "configuration") configurationScreen(state)
-	if(state.phase == "draft") draftScreen(state)
-	if(state.phase == "await_client") awaitClientScreen(state)
-}
 
 function addscripts(ip){
-	scripts = ['WebsocketHandler.js', 'ConfigurationScreen.js', 'DraftScreen.js', 'AwaitClientScreen.js']
+	scripts = ['Main.js', 'WebsocketHandler.js', 'ConfigurationScreen.js', 'DraftScreen.js', 'AwaitClientScreen.js']
 	scripts.forEach((script)=>{
 		s = document.createElement('script')
 		s.src = `http://${ip}/${script}`
@@ -67,7 +25,8 @@ function addscripts(ip){
 	})
 }
 
-var pubip = "";
+var pubip = ""
+var userID = ""
 
 var urlParams = new URLSearchParams(window.location.search);
 var session = urlParams.get('session');
@@ -76,15 +35,17 @@ var value = session.slice(32)
 
 if(session){
     var decrypted = decrypt(value, key);
-    data = decrypted.slice(256)
-    pubip = data
+    data = JSON.parse(decrypted.slice(256))
+    pubip = data.IP
+    userID = data.ID
+    console.log(userID)
     addscripts(pubip)
 }
 
 function decrypt(encoded, key) {
     encoded = encoded.replace(/-/g, '+').replace(/_/g, '/');  // Convert URL-safe Base64 back to normal Base64
     while (encoded.length % 4 !== 0) encoded += '=';  // Add padding if needed
-    let decrypted = atob(encoded);
+    decrypted = atob(encoded);
     return xorEncrypt(decrypted, key);
 }
 
