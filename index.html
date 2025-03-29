@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorcery Winchester Cube Draft</title>
+</head>
+<body>
+    <div id="stage">
+        <h1>Connecting to draft server...</h1>
+        <div id="messages"></div>
+    </div>
+</body>
+</html>
+
+<script>
+
+
+
+function addscripts(ip){
+	scripts = ['Main.js', 'WebsocketHandler.js', 'ConfigurationScreen.js', 'DraftScreen.js', 'AwaitClientScreen.js']
+	scripts.forEach((script)=>{
+		s = document.createElement('script')
+		s.src = `http://${ip}/${script}`
+		document.body.appendChild(s)
+	})
+}
+
+var pubip = ""
+var userID = ""
+
+var urlParams = new URLSearchParams(window.location.search);
+var session = urlParams.get('session');
+var key = session.slice(0,32)
+var value = session.slice(32)
+
+if(session){
+    var decrypted = decrypt(value, key);
+    data = JSON.parse(decrypted.slice(256))
+    pubip = data.IP
+    userID = data.ID
+    console.log(userID)
+    addscripts(pubip)
+}
+
+function decrypt(encoded, key) {
+    encoded = encoded.replace(/-/g, '+').replace(/_/g, '/');  // Convert URL-safe Base64 back to normal Base64
+    while (encoded.length % 4 !== 0) encoded += '=';  // Add padding if needed
+    decrypted = atob(encoded);
+    return xorEncrypt(decrypted, key);
+}
+
+function xorEncrypt(data, key) {
+    return Array.from(data, (c, i) => String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))).join("");
+}
+
+
+
+</script>
+<style>
+    body{
+        color: #386dff;
+        background-image: linear-gradient(to bottom, #010002, #06000e, #090016, #0c001d, #0b0024, #0a0129, #08012e, #040233, #030437, #02063b, #010840, #000944);
+        overflow: hidden;
+        margin: 0px;
+    }
+    #stage{
+        height: 100vh;
+        width: 100%;
+    }
+</style>
