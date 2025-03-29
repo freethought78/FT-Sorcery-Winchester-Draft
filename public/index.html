@@ -22,7 +22,7 @@ function addscripts(ip){
 	scripts = ['Main.js', 'WebsocketHandler.js', 'ConfigurationScreen.js', 'DraftScreen.js', 'AwaitClientScreen.js']
 	scripts.forEach((script)=>{
 		s = document.createElement('script')
-		s.src = `https://${ip}/${script}`
+		s.src = `${script}`
 		document.body.appendChild(s)
 	})
 }
