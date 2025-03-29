@@ -3,7 +3,7 @@ screen_width = window.innerWidth
 screen_height = window.innerHeight
 
 async function loadSorceryFont() {
-	const SorceryFont = new FontFace('SorceryFont', 'url(http://173.168.139.242/SorceryFont.ttf)');
+	const SorceryFont = new FontFace('SorceryFont', 'url(https://freethought78.github.io/FT-Sorcery-Winchester-Draft/public/SorceryFont.ttf)');
 
 	try {
 		await SorceryFont.load();
