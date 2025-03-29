@@ -1,5 +1,6 @@
+console.log(pubip)
 // Create WebSocket connection.
-const socket = new WebSocket('ws://localhost/ws'); // Match this URL to FastAPI WebSocket route
+const socket = new WebSocket(`ws://${pubip}/ws`); // Match this URL to FastAPI WebSocket route
 
 // Connection open
 socket.onopen = function(event) {

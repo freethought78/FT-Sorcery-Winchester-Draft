@@ -43,7 +43,7 @@ function draftScreen(state){
 
     //update status message
     status_message_div = document.getElementById('status_message')
-    if (state.turn == secureID){
+    if (state.turn == userID){
         status_message_div.innerHTML = "Select a column to draft."
     } else {
         status_message_div.innerHTML = "Your opponent is making a selection."
@@ -64,7 +64,7 @@ function draftScreen(state){
 //click event for columns
 function select_column(col_num, turn){
     console.log(`Column ${col_num} selected`)
-    if(turn == secureID){
+    if(turn == userID){
         var socket_message = {
             "select_column": {
                 "user": userID,

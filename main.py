@@ -4,8 +4,11 @@ import uvicorn
 import SocketHandler
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET"], allow_headers=["*"])
+
 
 # Determine if we're running as a bundled executable
 if getattr(sys, 'frozen', False):

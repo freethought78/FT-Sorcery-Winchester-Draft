@@ -2,10 +2,11 @@ import os
 import sys
 import string
 import random
-import urllib.request
+import urllib.request, urllib.parse
 import json
-from csv import DictReader
-from hashlib import sha256
+import webbrowser
+
+import SessionData
 
 
 def handle(data):
@@ -39,10 +40,6 @@ def handle(data):
             source.clear()
             return draft.next_draft_round()
 
-
-def get_hash(un_hashed):
-    return sha256(un_hashed.encode('utf-8')).hexdigest()
-
 #this makes sure that file paths work when running from source and when running from a pyinstaller package
 if getattr(sys, 'frozen', False):
     base_path = sys._MEIPASS  # Running as a bundled executable
@@ -59,11 +56,18 @@ class Draft:
         self.IP = self.get_external_ip()
         self.hostID = self.generate_ID()
         self.clientID = self.generate_ID()
-        self.secure_hostID = get_hash(self.hostID)
-        self.secure_clientID = get_hash(self.clientID)
         self.turn = self.hostID
         self.state = {}
         self.set_phase('configuration')
+        self.session = self.generate_session()
+
+    def generate_session(self):
+        session = self.generate_ID(256)
+        session = SessionData.encrypt(session+self.IP)
+        self.state['session'] = session
+        print(session)
+        return session
+
 
     def load_cards(self):
         path = os.path.join(base_path, 'Alpha-Beta.json')
@@ -81,6 +85,7 @@ class Draft:
 
         path = os.path.join(base_path, 'Arthurian Legends.json')
         with open(path, 'r+', encoding='utf-8') as f:
+            card_list = json.load(f)
             for card in card_list['spellbook']:
                 card['set'] = 'arthurian legends'
                 master_card_list.append(card)
@@ -101,10 +106,10 @@ class Draft:
             col.append(self.cube.pop())
         if self.turn == self.hostID:
             self.turn = self.clientID
-            self.state['turn'] = self.secure_clientID
+            self.state['turn'] = self.clientID
         else:
             self.turn = self.hostID
-            self.state['turn'] = self.secure_hostID
+            self.state['turn'] = self.hostID
 
         return {"state": self.state}
 
@@ -112,9 +117,9 @@ class Draft:
         draft.generate_cube(draft.master_card_list, draft.cube_size)
         state = {
             'draft_columns': [[], [], [], []],
-            'host': self.secure_hostID,
-            'client': self.secure_clientID,
-            'turn': self.secure_clientID
+            'host': self.hostID,
+            'client': self.clientID,
+            'turn': self.clientID,
         }
 
         self.turn = self.clientID
@@ -134,6 +139,5 @@ class Draft:
 
 
 draft = Draft()
-print (draft.secure_hostID)
-os.system(f'explorer "http://{draft.IP}?id={draft.hostID}"')
-
+url = f"http://{draft.IP}?session={draft.session}&id={draft.hostID}"
+webbrowser.open(url)

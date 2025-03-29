@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,64 +12,87 @@
 </body>
 </html>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.3.1/sha256.min.js" integrity="sha512-qw5xqZrce8QejL/YnoVvHaXggvfJK3bP2rczgxPSL+JhACfJhOU6gG+/c1LFyRxIpwaF8pZlfwUXLIK+5EEiKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="WebsocketHandler.js"></script>
-<script src="ConfigurationScreen.js"></script>
-<script src="DraftScreen.js"></script>
-<script src="AwaitClientScreen.js"></script>
-
 <script>
-    userID = new URLSearchParams(window.location.search).get("id")
-    secureID = hash(userID)
+userID = new URLSearchParams(window.location.search).get("id")
 
-    stage = document.getElementById('stage')
-    screen_width = window.innerWidth
-    screen_height = window.innerHeight
+stage = document.getElementById('stage')
+screen_width = window.innerWidth
+screen_height = window.innerHeight
 
-    async function loadSorceryFont() {
-        const SorceryFont = new FontFace('SorceryFont', 'url(SorceryFont.ttf)');
+async function loadSorceryFont() {
+	const SorceryFont = new FontFace('SorceryFont', 'url(http://173.168.139.242/SorceryFont.ttf)');
 
-        try {
-            await SorceryFont.load();
-            document.fonts.add(SorceryFont);
-            // Use the font
-            document.body.style.fontFamily = 'SorceryFont';
-        } catch (error) {
-            console.error('Error loading font:', error);
-        }
-    }
+	try {
+		await SorceryFont.load();
+		document.fonts.add(SorceryFont);
+		// Use the font
+		document.body.style.fontFamily = 'SorceryFont';
+	} catch (error) {
+		console.error('Error loading font:', error);
+	}
+}
 
-    loadSorceryFont();
+loadSorceryFont();
 
-    var inactive_tab_interval
+var inactive_tab_interval
 
-    //if the user is on another page, they might miss a state update, reload the page on page focus to stay up to date
-    window.addEventListener('focus', (event) => {
-        clearInterval(inactive_tab_interval)
-    });
+//if the user is on another page, they might miss a state update, reload the page on page focus to stay up to date
+window.addEventListener('focus', (event) => {
+	clearInterval(inactive_tab_interval)
+});
 
-    window.addEventListener('blur', (event) => {
-        inactive_tab_interval = setInterval(()=>{
-            requestStateUpdate()
-        }, 1000)
-    });
+window.addEventListener('blur', (event) => {
+	inactive_tab_interval = setInterval(()=>{
+		requestStateUpdate()
+	}, 1000)
+});
 
-    //reload page on resize
-    window.addEventListener('resize', (event) => {
-        window.location.reload();
-    });
+//reload page on resize
+window.addEventListener('resize', (event) => {
+	window.location.reload();
+});
 
-    function buildStage(state){
-        if(state.phase == "configuration") configurationScreen(state)
-        if(state.phase == "draft") draftScreen(state)
-        if(state.phase == "await_client") awaitClientScreen(state)
-    }
+function buildStage(state){
+	if(state.phase == "configuration") configurationScreen(state)
+	if(state.phase == "draft") draftScreen(state)
+	if(state.phase == "await_client") awaitClientScreen(state)
+}
 
-    function hash(id){
-        var sha256 = new jsSHA('SHA-256', 'TEXT');
-        sha256.update(id);
-        return sha256.getHash("HEX");
-    }
+function addscripts(ip){
+	scripts = ['WebsocketHandler.js', 'ConfigurationScreen.js', 'DraftScreen.js', 'AwaitClientScreen.js']
+	scripts.forEach((script)=>{
+		s = document.createElement('script')
+		s.src = `http://${ip}/${script}`
+		document.body.appendChild(s)
+	})
+}
+
+var pubip = "";
+
+var urlParams = new URLSearchParams(window.location.search);
+var session = urlParams.get('session');
+console.log(session)
+
+if(session){
+    var decrypted = decrypt(session);
+    ip = decrypted.slice(256)
+    pubip = ip
+    addscripts(ip)
+    console.log('Decrypted:', ip);
+}
+
+function decrypt(encoded) {
+    encoded = encoded.replace(/-/g, '+').replace(/_/g, '/');  // Convert URL-safe Base64 back to normal Base64
+    while (encoded.length % 4 !== 0) encoded += '=';  // Add padding if needed
+    let decrypted = atob(encoded);
+    return xorEncrypt(decrypted);
+}
+
+function xorEncrypt(ip, key = "secretkey") {
+    return Array.from(ip, (c, i) => String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))).join("");
+}
+
+
 
 </script>
 <style>
