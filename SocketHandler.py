@@ -146,5 +146,6 @@ class Draft:
 
 
 draft = Draft()
-url = f"http://{draft.IP}?session={draft.host_session}"
+base_url = 'freethought78.github.io/FT-Sorcery-Winchester-Draft/index.html'
+url = f"https://{base_url}?session={draft.host_session}"
 webbrowser.open(url)
