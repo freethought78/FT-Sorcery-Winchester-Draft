@@ -124,8 +124,6 @@ class Draft:
         draft.generate_cube(draft.master_card_list, draft.cube_size)
         state = {
             'draft_columns': [[], [], [], []],
-            'host': self.hostID,
-            'client': self.clientID,
             'turn': self.clientID,
         }
 
