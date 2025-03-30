@@ -22,7 +22,7 @@ function addscripts(){
 	scripts = ['Main.js', 'WebsocketHandler.js', 'ConfigurationScreen.js', 'DraftScreen.js', 'AwaitClientScreen.js']
 	scripts.forEach((script)=>{
 		s = document.createElement('script')
-		s.src = `https://freethought78.github.io/FT-Sorcery-Winchester-Draft/public/${script}`
+		s.src = `https://${pubip}/${script}`
 		document.body.appendChild(s)
 	})
 }
