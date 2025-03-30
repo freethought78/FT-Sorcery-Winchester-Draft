@@ -39,4 +39,4 @@ async def websocket_endpoint(websocket: WebSocket):
 app.mount("/", StaticFiles(directory=os.path.join(base_path, "public"), html=True), name="public")
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=80, log_level="debug", timeout_keep_alive=0)
+    uvicorn.run(app, host="0.0.0.0", port=443, log_level="debug", timeout_keep_alive=0, ssl_keyfile="key.pem", ssl_certfile="cert.pem")
