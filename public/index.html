@@ -22,7 +22,8 @@ function addscripts(){
 	scripts = ['Main.js', 'WebsocketHandler.js', 'ConfigurationScreen.js', 'DraftScreen.js', 'AwaitClientScreen.js']
 	scripts.forEach((script)=>{
 		s = document.createElement('script')
-		s.src = `https://freethought78.github.io/FT-Sorcery-Winchester-Draft/public/${script}`
+		if (localtest) s.src = `https://${pubip}/${script}`
+        else s.src = `https://freethought78.github.io/FT-Sorcery-Winchester-Draft/public/${script}`
 		document.body.appendChild(s)
 	})
 }
@@ -32,6 +33,7 @@ var userID = ""
 
 var urlParams = new URLSearchParams(window.location.search);
 var session = urlParams.get('session');
+var localtest = urlParams.get('localtest');
 var key = session.slice(0,32)
 var value = session.slice(32)
 
