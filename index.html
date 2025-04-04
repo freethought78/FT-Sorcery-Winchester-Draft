@@ -1,0 +1,40 @@
+<html>
+<body>
+<h1><div id="stage"></div></h1>
+</body>
+</html>
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="Alpha-Beta.js"></script>
+<script src="Arthurian Legends.js"></script>
+<script src="Main.js"></script>
+<script src="ConfigurationScreen.js"></script>
+<script src="AwaitGuestScreen.js"></script>
+<script src="DraftScreen.js"></script>
+<script src="DraftObject.js"></script>
+<script src="Network.js"></script>
+<script>
+
+// Page interaction
+var stage = document.querySelector("#stage");
+var urlParams = new URLSearchParams(window.location.search);
+var remote = urlParams.get('session');
+var userID
+var conn;
+
+
+
+
+</script>
+<style>
+    body{
+        color: #386dff;
+        background-image: linear-gradient(to bottom, #010002, #06000e, #090016, #0c001d, #0b0024, #0a0129, #08012e, #040233, #030437, #02063b, #010840, #000944);
+        overflow: hidden;
+        margin: 0px;
+    }
+    #stage{
+        height: 100vh;
+        width: 100%;
+    }
+</style>

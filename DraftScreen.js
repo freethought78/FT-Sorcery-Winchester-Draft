@@ -1,5 +1,6 @@
-function draftScreen(state){
+function showDraftScreen(conn){
     stage.innerHTML = ""
+	state = Draft.state
 
     //card properties
     number_of_columns = state.draft_columns.length
@@ -64,15 +65,30 @@ function draftScreen(state){
 //click event for columns
 function select_column(col_num, turn){
     console.log(`Column ${col_num} selected`)
+	console.log(turn)
     if(turn == userID){
-        var socket_message = {
-            "select_column": {
-                "user": userID,
-                "column": col_num
-            }
-        }
-        socket.send(JSON.stringify(socket_message))
+		if (userID == 'guest'){
+			var message = {
+				type: "select_column",
+				column: col_num
+			}
+			conn.send(message)
+		}
+		if (userID == 'host'){
+			selectCards(userID, col_num, conn)
+		}
     }
+}
+
+function selectCards(user, column, conn){
+	for (var cardid in Draft.state.draft_columns[column]){
+		var card = Draft.state.draft_columns[column][cardid]
+		card.owner = user
+		card.section = 'maybe'
+		Draft.state.selected_cards.push(card)
+	}
+	Draft.state.draft_columns[column] = []
+	nextPull(conn)
 }
 
 function clean_string(input) {

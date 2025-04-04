@@ -1,0 +1,56 @@
+<html>
+<body>
+<h1><div id="stage"></div></h1>
+</body>
+</html>
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>
+
+// Page interaction
+var stage = document.querySelector("#stage");
+var urlParams = new URLSearchParams(window.location.search);
+var remote = urlParams.get('session');
+var conn;
+
+// URL encoding
+function encode(str) {
+    return encodeURIComponent(btoa(str));
+}
+function decode(str) {
+    return atob(decodeURIComponent(str));
+}
+
+// Establish connection
+var peer = new Peer();
+peer.on('open', function(id) {
+    if (remote) {
+        conn = peer.connect(decode(remote));
+        conn.on('open', () => {
+            console.log("Connected to Peer A!");
+            conn.send("Hello from Peer B!");
+        });
+
+        conn.on('data', (data) => {
+            console.log("Received from Peer A:", data);
+        });
+    } else {
+        stage.innerHTML = `<a href="http://localhost/?session=${encode(id)}">link</a>`;
+    }
+});
+
+// When a connection is received (Peer A)
+peer.on('connection', function(c) {
+    conn = c;
+    console.log('Connected to Peer B!');
+
+    conn.on('open', () => {
+        console.log("Connection open!");
+        conn.send("Hello from Peer A!");
+    });
+
+    conn.on('data', (data) => {
+        console.log("Received from Peer B:", data);
+    });
+});
+</script>
