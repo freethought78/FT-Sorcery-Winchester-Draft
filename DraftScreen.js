@@ -1,4 +1,7 @@
 function showDraftScreen(conn){
+	screen_width = window.innerWidth
+	screen_height = window.innerHeight
+	
     stage.innerHTML = ""
 	state = Draft.state
 
