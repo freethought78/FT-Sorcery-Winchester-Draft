@@ -52,6 +52,7 @@ function showDraftScreen(conn){
 
 	//add the deck management panel
 	addDeckManagementPanel()
+	repositionToggleButtons()
 
     //add css
     stage.innerHTML+= `
@@ -92,17 +93,4 @@ function selectCards(user, column, conn){
 	}
 	Draft.state.draft_columns[column] = []
 	nextPull(conn)
-}
-
-function clean_string(input) {
-    //console.log(input)
-    input = input.replace(/ /g, "_");
-    input = input.replace(/-/g, "_");
-    input = input.replace(/’/g, "");
-    input = input.toLowerCase()
-    // Remove accents from characters
-    normalized = input.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
-
-    //console.log(normalized)
-    return normalized
 }
