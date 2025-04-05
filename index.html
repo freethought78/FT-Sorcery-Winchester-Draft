@@ -11,8 +11,10 @@
 <script src="ConfigurationScreen.js"></script>
 <script src="AwaitGuestScreen.js"></script>
 <script src="DraftScreen.js"></script>
+<script src="DeckManagementPanel.js"></script>
 <script src="DraftObject.js"></script>
 <script src="Network.js"></script>
+
 <script>
 
 // Page interaction
@@ -29,7 +31,7 @@ var conn;
 <style>
     body{
         color: #386dff;
-        background-image: linear-gradient(to bottom, #010002, #06000e, #090016, #0c001d, #0b0024, #0a0129, #08012e, #040233, #030437, #02063b, #010840, #000944);
+        background-image: linear-gradient(to bottom, #303, #101);
         overflow: hidden;
         margin: 0px;
     }
@@ -37,4 +39,43 @@ var conn;
         height: 100vh;
         width: 100%;
     }
+#deck_management_panel_container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  height: 25vh;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: transparent; /* Ensure background is transparent */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 1); /* subtle lift */
+  z-index: 10;
+}
+
+.section {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(auto-fill, minmax(20px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 8px;
+  overflow-y: auto;
+  font-size: 18px;
+}
+
+/* Section colors */
+.keep {
+  background: linear-gradient(-30deg, #010, #030);
+}
+
+.sideboard {
+  background: linear-gradient(-30deg, #001, #003);
+  grid-template-columns: 2fr;
+}
+
+.maybe {
+  background: linear-gradient(-30deg, #100, #300);
+}
+
+
 </style>

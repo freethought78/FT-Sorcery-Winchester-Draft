@@ -50,6 +50,9 @@ function showDraftScreen(conn){
         status_message_div.innerHTML = "Your opponent is making a selection."
     }
 
+	//add the deck management panel
+	addDeckManagementPanel()
+
     //add css
     stage.innerHTML+= `
         <style>

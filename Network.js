@@ -37,8 +37,13 @@ peer.on('connection', function(c) {
         console.log("Connection open!");
         conn.send("Hello from Peer A!");
 		Draft.state.phase='draft'
-		showDraftScreen(Draft.state)
-		nextPull(conn)
+		showDraftScreen(conn)
+		if(Draft.state.started){
+			sendStateUpdate(conn)
+		}else{
+			Draft.state.started = true
+			nextPull(conn)
+		}
     });
 
     conn.on('data', (data) => {
