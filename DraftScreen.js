@@ -11,14 +11,17 @@ function showDraftScreen(conn){
     card_margin = card_width / 4
 
     //card preview div
-    stage.innerHTML += `<img width=${card_width * 2}px id="card_preview" style="float:right; padding: ${card_margin * 2}px">`
+    stage.innerHTML += `<img 
+		width=${card_width * 2}px 
+		id="card_preview" 
+		style="
+			float:right; 
+			margin: ${card_margin * 2}px; 
+			box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.9);
+		">`
 
     //draft status message div
     stage.innerHTML += `<div id="status_message" width=100% style="font-size: 50px; margin: 30px; position: absolute; bottom: 0px"></div>`
-
-    //card image url formatting
-    prestring = "https://d27a44hjr9gen3.cloudfront.net/bet/"
-    poststring = "_b_s.png"
 
     //use information from draft state received from server and place all card images into their correct columns, laid out on the stage
     for (var col_num = 0; col_num < number_of_columns; col_num++){
@@ -38,7 +41,7 @@ function showDraftScreen(conn){
             col_div.innerHTML += `<img
                     src="${link}"
                     width=${card_width}px
-                    style="margin: ${card_margin}px; top: ${card_num*card_margin}px; position:absolute;"
+                    style="margin: ${card_margin}px; top: ${card_num*card_margin}px; position:absolute; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.9);"
                     onmouseover="document.getElementById('card_preview').src = '${link}'"
                     onclick="select_column(${col_num}, '${state.turn}')"
                 >`

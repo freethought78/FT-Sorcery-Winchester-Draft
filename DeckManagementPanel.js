@@ -9,6 +9,9 @@ function addDeckManagementPanel(){
 }
 
 function populateDeckPanel() {
+	const keepContainer = document.createElement('div');
+	keepContainer.setAttribute('id', 'keep_container');
+	
 	const keepSection = document.createElement('div');
 	keepSection.classList.add('section', 'keep');
 
@@ -17,32 +20,44 @@ function populateDeckPanel() {
 
 	const maybeSection = document.createElement('div');
 	maybeSection.classList.add('section', 'maybe');
+	
+	
+	deck_management_panel_container.appendChild(keepContainer);
+	keepContainer.appendChild(keepSection);
+	deck_management_panel_container.appendChild(sideboardSection);
+	deck_management_panel_container.appendChild(maybeSection);
 
 	// Add sample card slots (just for testing)
-	for (let i = 0; i < 6; i++) {
+	for (let i = 0; i < 26; i++) {
 		const slot = document.createElement('div');
 		slot.classList.add('card-slot');
-		slot.textContent = `Keep ${i + 1}`;
+		card_name = randomCardName()
+		slot.textContent = card_name;
 		keepSection.appendChild(slot);
 	}
 
 	for (let i = 0; i < 4; i++) {
 		const slot = document.createElement('div');
 		slot.classList.add('card-slot');
-		slot.textContent = `Sideboard ${i + 1}`;
+		card_name = randomCardName()
+		slot.textContent = card_name;
 		sideboardSection.appendChild(slot);
 	}
 
-	for (let i = 0; i < 6; i++) {
+	for (let i = 0; i < 20; i++) {
 		const slot = document.createElement('div');
 		slot.classList.add('card-slot');
-		slot.textContent = `Maybe ${i + 1}`;
+		card_name = randomCardName()
+		slot.textContent = card_name;
 		maybeSection.appendChild(slot);
 	}
+}
 
-	deck_management_panel_container.appendChild(keepSection);
-	deck_management_panel_container.appendChild(sideboardSection);
-	deck_management_panel_container.appendChild(maybeSection);
+function randomCardName(){
+	var card_number = Math.random()*master_card_list.length
+	card_number = Math.floor(card_number)
+	var card_name = master_card_list[card_number].name
+	return card_name
 }
 
 function addDeckManagementToggleButtons(){
