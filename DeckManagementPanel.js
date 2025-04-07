@@ -2,38 +2,46 @@ function addDeckManagementPanel(){
 	if (typeof (deck_management_panel_container) == 'undefined'){
 		deck_management_panel_container = document.createElement('div')
 		deck_management_panel_container.setAttribute('id', 'deck_management_panel_container')
-		populateDeckPanel()
 		document.body.appendChild(deck_management_panel_container)
 		addDeckManagementToggleButtons()
+		keep_container = document.createElement('div');
+		keep_container.setAttribute('id', 'keep_container');
+
+		keep_section = document.createElement('div');
+		keep_section.classList.add('section', 'keep');
+
+		sideboard_section = document.createElement('div');
+		sideboard_section.classList.add('section', 'sideboard');
+
+		maybeSection = document.createElement('div');
+		maybeSection.classList.add('section', 'maybe');
+			
+		deck_management_panel_container.appendChild(keep_container);
+		keep_container.appendChild(keep_section);
+		deck_management_panel_container.appendChild(sideboard_section);
+		deck_management_panel_container.appendChild(maybeSection);
 	}
+	populateDeckPanel()
 }
 
 function populateDeckPanel() {
-	const keepContainer = document.createElement('div');
-	keepContainer.setAttribute('id', 'keep_container');
-	
-	const keepSection = document.createElement('div');
-	keepSection.classList.add('section', 'keep');
+	var collection = Draft.state[`${userID}_cards`]
+	keep_section.innerHTML = ""
+	for (var entry in collection){
+		const card_div = document.createElement('div');
+		card_div.innerHTML = collection[entry].name
+		keep_section.appendChild(card_div)
+	}
+}
 
-	const sideboardSection = document.createElement('div');
-	sideboardSection.classList.add('section', 'sideboard');
-
-	const maybeSection = document.createElement('div');
-	maybeSection.classList.add('section', 'maybe');
-	
-	
-	deck_management_panel_container.appendChild(keepContainer);
-	keepContainer.appendChild(keepSection);
-	deck_management_panel_container.appendChild(sideboardSection);
-	deck_management_panel_container.appendChild(maybeSection);
-
+function populateDeckManagerWithRandomCards(){
 	// Add sample card slots (just for testing)
 	for (let i = 0; i < 26; i++) {
 		const slot = document.createElement('div');
 		slot.classList.add('card-slot');
 		card_name = randomCardName()
 		slot.textContent = card_name;
-		keepSection.appendChild(slot);
+		keep_section.appendChild(slot);
 	}
 
 	for (let i = 0; i < 4; i++) {
@@ -41,7 +49,7 @@ function populateDeckPanel() {
 		slot.classList.add('card-slot');
 		card_name = randomCardName()
 		slot.textContent = card_name;
-		sideboardSection.appendChild(slot);
+		sideboard_section.appendChild(slot);
 	}
 
 	for (let i = 0; i < 20; i++) {
