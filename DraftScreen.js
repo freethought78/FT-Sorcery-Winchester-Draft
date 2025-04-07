@@ -94,8 +94,8 @@ function selectCards(user, column, conn){
 	for (var cardid in Draft.state.draft_columns[column]){
 		var card = Draft.state.draft_columns[column][cardid]
 		card.owner = user
-		card.section = 'maybe'
-		Draft.state.selected_cards.push(card)
+		card.section = 'keep'
+		Draft.state[`${user}_cards`].push(card)
 	}
 	Draft.state.draft_columns[column] = []
 	nextPull(conn)

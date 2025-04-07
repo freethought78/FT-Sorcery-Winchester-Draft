@@ -5,7 +5,8 @@ function createDraftObject(configuration){
 	Draft.cube_size = configuration.cube_size
 	Draft.cube = generateCube()
 	Draft.state = {}
-	Draft.state.selected_cards = []
+	Draft.state.host_cards = []
+	Draft.state.guest_cards = []
 	Draft.state.draft_columns = [[],[],[],[]]
 	Draft.state.turn = "guest" //The host go be first, after the first card pull happens, which changes the turn
 }
