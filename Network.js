@@ -18,7 +18,7 @@ peer.on('open', function(id) {
             console.log("Received from Peer A:", data);
 			if(data.type == 'state') {
 				Draft.state = data.state
-				buildStage()
+				buildStage(conn)
 			}
         });
 	//Host Entry Point
@@ -49,6 +49,12 @@ peer.on('connection', function(c) {
     conn.on('data', (data) => {
         console.log("Received from Peer B:", data);
 		if(data.type == 'select_column') selectCards('guest', data.column, conn)
+		if(data.type == 'deck') {
+			var array_id = data.array_id
+			var section = data.section
+			Draft.state.guest_cards[array_id].section = section
+			sendStateUpdate(conn)
+		}
     });
 });
 
@@ -56,4 +62,13 @@ function sendStateUpdate(conn){
 	var update = {type: 'state', state: Draft.state}
 	conn.send(update)
 	buildStage(conn)
+}
+
+function sendDeckUpdate(conn, array_id, section){
+	var update = {
+		type: 'deck',
+		array_id: array_id,
+		section: section
+	}
+	conn.send(update)
 }

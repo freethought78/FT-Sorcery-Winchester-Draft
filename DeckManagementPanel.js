@@ -31,21 +31,21 @@ function populateDeckPanel() {
 	maybe_section.innerHTML = ""
 	for (var entry in collection){
 		var card = collection[entry]
-		addCardToPanel(card)
+		addCardToPanel(card, array_id = entry)
 	}
 }
 
-function addCardToPanel(card){
+function addCardToPanel(card, array_id){
 	const panel_section_switch = {
 		'keep' : [keep_section, 'S', 'M'],
 		'sideboard' : [sideboard_section, 'K', 'M'],
 		'maybe' : [maybe_section, 'K', 'S']
 	}
 	
-	const button_class_switch = {
-		'K': 'keep_button',
-		'S': 'sideboard_button',
-		'M': 'maybe_button'
+	const button_property_switch = {
+		'K': ['keep_button', 'keep'],
+		'S': ['sideboard_button', 'sideboard'],
+		'M': ['maybe_button', 'maybe']
 	}
 	
 	var panel_section = panel_section_switch[card.section][0]
@@ -61,13 +61,26 @@ function addCardToPanel(card){
 	
 	card_quantity.classList.add('card_quantity')
 	card_label.classList.add('card_label')
-	section_button_1.classList.add(button_class_switch[left_button_text])
+	section_button_1.classList.add(button_property_switch[left_button_text][0])
+	section_button_1.onclick = ()=>{moveCard(array_id, button_property_switch[left_button_text][1])}
 	section_button_1.classList.add('panel_button')
-	section_button_2.classList.add(button_class_switch[right_button_text])
+	section_button_2.classList.add(button_property_switch[right_button_text][0])
+	section_button_2.onclick = ()=>{moveCard(array_id, button_property_switch[right_button_text][1])}
 	section_button_2.classList.add('panel_button')
 	
 	card_quantity.innerHTML = '1'
 	card_label.innerHTML = card.name
+}
+
+function moveCard(array_id, section){
+	if(userID=='host'){
+		Draft.state.host_cards[array_id].section = section
+		populateDeckPanel()
+		sendStateUpdate(conn)
+	}
+	if(userID=='guest'){
+		sendDeckUpdate(conn, array_id, section)
+	}
 }
 
 function populateDeckManagerWithRandomCards(){
