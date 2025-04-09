@@ -13,13 +13,13 @@ function addDeckManagementPanel(){
 		sideboard_section = document.createElement('div');
 		sideboard_section.classList.add('section', 'sideboard');
 
-		maybeSection = document.createElement('div');
-		maybeSection.classList.add('section', 'maybe');
+		maybe_section = document.createElement('div');
+		maybe_section.classList.add('section', 'maybe');
 			
 		deck_management_panel_container.appendChild(keep_container);
 		keep_container.appendChild(keep_section);
 		deck_management_panel_container.appendChild(sideboard_section);
-		deck_management_panel_container.appendChild(maybeSection);
+		deck_management_panel_container.appendChild(maybe_section);
 	}
 	populateDeckPanel()
 }
@@ -27,11 +27,47 @@ function addDeckManagementPanel(){
 function populateDeckPanel() {
 	var collection = Draft.state[`${userID}_cards`]
 	keep_section.innerHTML = ""
+	sideboard_section.innerHTML = ""
+	maybe_section.innerHTML = ""
 	for (var entry in collection){
-		const card_div = document.createElement('div');
-		card_div.innerHTML = collection[entry].name
-		keep_section.appendChild(card_div)
+		var card = collection[entry]
+		addCardToPanel(card)
 	}
+}
+
+function addCardToPanel(card){
+	const panel_section_switch = {
+		'keep' : [keep_section, 'S', 'M'],
+		'sideboard' : [sideboard_section, 'K', 'M'],
+		'maybe' : [maybe_section, 'K', 'S']
+	}
+	
+	const button_class_switch = {
+		'K': 'keep_button',
+		'S': 'sideboard_button',
+		'M': 'maybe_button'
+	}
+	
+	var panel_section = panel_section_switch[card.section][0]
+	var left_button_text = panel_section_switch[card.section][1]
+	var right_button_text = panel_section_switch[card.section][2]
+	
+	const card_div = document.createElement('div');			panel_section.appendChild(card_div)
+	const card_quantity = document.createElement('div'); 	card_div.appendChild(card_quantity)
+	const card_label = document.createElement('div'); 		card_div.appendChild(card_label)
+	const section_button_1 = document.createElement('div'); card_div.appendChild(section_button_1)
+	const section_button_2 = document.createElement('div'); card_div.appendChild(section_button_2)
+	card_div.classList.add('card_slot')
+	
+	card_quantity.classList.add('card_quantity')
+	card_label.classList.add('card_label')
+	section_button_1.classList.add(button_class_switch[left_button_text])
+	section_button_1.classList.add('panel_button')
+	section_button_2.classList.add(button_class_switch[right_button_text])
+	section_button_2.classList.add('panel_button')
+	
+	card_quantity.innerHTML = '1'
+	card_label.innerHTML = card.name
 }
 
 function populateDeckManagerWithRandomCards(){
@@ -57,7 +93,7 @@ function populateDeckManagerWithRandomCards(){
 		slot.classList.add('card-slot');
 		card_name = randomCardName()
 		slot.textContent = card_name;
-		maybeSection.appendChild(slot);
+		maybe_section.appendChild(slot);
 	}
 }
 

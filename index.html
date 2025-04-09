@@ -63,13 +63,13 @@ var conn;
 
 }
 
-.section div {
-	
+.card_slot{
+	display: grid;
+	--square_size: calc(25vh / 11);
+	grid-template-columns: var(--square_size) auto var(--square_size) var(--square_size);
 	font-size: calc(25vh / 11) ;
 	height: calc(25vh / 10);
 	line-height: calc(25vh / 10);
-	padding-right: 20px;
-	padding-left: 10px;
 	color: white;
 	text-shadow:
 		-2px -2px 0 black,
@@ -79,6 +79,34 @@ var conn;
 
 	box-shadow: inset 0 0 1vh 0.5vh rgba(0, 0, 0, 1), 0 0 0.1vh 0.2vh rgb(150, 150, 150, 0.2);
 	writing-mode: horizontal-tb;
+}
+
+.card_quantity{
+	justify-self: center;
+}
+
+.card_label{
+	justify-self: left;
+	padding-right: var(--square_size);
+}
+
+.panel_button{
+	--button_size: calc(var(--square_size) * 0.75);
+	height: var(--button_size);
+	width: var(--button_size);
+	justify-self: center;
+	align-self: center;
+	border: 1px solid black;
+}
+
+.keep_button{
+	background-color: #050;
+}
+.sideboard_button{
+	background-color: #005;
+}
+.maybe_button{
+	background-color: #500;
 }
 
 #keep_container{
