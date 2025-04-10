@@ -2,13 +2,20 @@ var Draft = {}
 master_card_list = prepareCards()
 function createDraftObject(configuration){
 	Draft = {}
-	Draft.cube_size = configuration.cube_size
-	Draft.cube = generateCube()
+	var cube_source = configuration.cube_source
+	if (cube_source == "random") Draft.cube = generateRandomCube(configuration.cube_size)
+	if (cube_source == "names") Draft.cube = configuration.card_list
+	Draft.cube = shuffle(Draft.cube)
 	Draft.state = {}
 	Draft.state.host_cards = []
 	Draft.state.guest_cards = []
 	Draft.state.draft_columns = [[],[],[],[]]
 	Draft.state.turn = "guest" //The host go be first, after the first card pull happens, which changes the turn
+}
+
+function shuffle(array){
+	const shuffledArray = array.sort(() => Math.random() - 0.5);
+	return shuffledArray
 }
 
 function nextPull(conn){
@@ -50,7 +57,6 @@ function prepareCards(){
 	return [...beta_card_list, ...AL_card_list]
 }
 
-function generateCube(){
-	return getRandomElements(master_card_list, Draft.cube_size)
-	console.log(Draft.cube)
+function generateRandomCube(size){
+	return getRandomElements(master_card_list, size)
 }
