@@ -93,7 +93,6 @@ function select_column(col_num, turn){
 function selectCards(user, column, conn){
 	for (var cardid in Draft.state.draft_columns[column]){
 		var card = Draft.state.draft_columns[column][cardid]
-		card.owner = user
 		card.section = 'keep'
 		Draft.state[`${user}_cards`].push(card)
 	}

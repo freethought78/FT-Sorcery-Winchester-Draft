@@ -26,13 +26,39 @@ function addDeckManagementPanel(){
 
 function populateDeckPanel() {
 	var collection = Draft.state[`${userID}_cards`]
+	var compact_collection = compactCollection(collection)
 	keep_section.innerHTML = ""
 	sideboard_section.innerHTML = ""
 	maybe_section.innerHTML = ""
-	for (var entry in collection){
-		var card = collection[entry]
-		addCardToPanel(card, array_id = entry)
+	for (var entry in compact_collection){
+		var card = compact_collection[entry]
+		addCardToPanel(card, array_id = card.index)
 	}
+}
+
+function compactCollection(array){
+	var duplicates = {}
+	array.forEach((card, index)=>{
+		const key = JSON.stringify(card)
+		if(!duplicates[key]) duplicates[key] = {'count': 0, 'index': index}
+		duplicates[key]['count'] += 1
+		duplicates[key]['index'] = index
+		console.log('key: ', duplicates[key])
+	})
+	
+	console.log('duplicates: ', duplicates)
+	
+	var new_array = []
+	for (var key in duplicates){
+		var card = JSON.parse(key)
+		var count = duplicates[key].count
+		var index = duplicates[key].index
+		card.quantity = count
+		card.index = index
+		new_array.push(card)
+	}
+	console.log('new_array: ', new_array)
+	return new_array
 }
 
 function addCardToPanel(card, array_id){
@@ -68,7 +94,7 @@ function addCardToPanel(card, array_id){
 	section_button_2.onclick = ()=>{moveCard(array_id, button_property_switch[right_button_text][1])}
 	section_button_2.classList.add('panel_button')
 	
-	card_quantity.innerHTML = '1'
+	card_quantity.innerHTML = card.quantity
 	card_label.innerHTML = card.name
 }
 
