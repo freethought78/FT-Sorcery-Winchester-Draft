@@ -26,14 +26,23 @@ function addDeckManagementPanel(){
 
 function populateDeckPanel() {
 	var collection = Draft.state[`${userID}_cards`]
-	var compact_collection = compactCollection(collection)
+	var compacted_collection = compactCollection(collection)
+	var sorted_collection = sortCollection(compacted_collection, key='name', reverse=false)
 	keep_section.innerHTML = ""
 	sideboard_section.innerHTML = ""
 	maybe_section.innerHTML = ""
-	for (var entry in compact_collection){
-		var card = compact_collection[entry]
+	for (var entry in sorted_collection){
+		var card = sorted_collection[entry]
 		addCardToPanel(card, array_id = card.index)
 	}
+}
+
+function sortCollection(array, key='name', reverse=false){
+	return [...array].sort((a,b)=>{
+		if (a[key] < b[key]) return reverse ? 1 : -1
+		if (a[key] > b[key]) return reverse ? -1 : 1
+		return 0
+	})
 }
 
 function compactCollection(array){
@@ -42,7 +51,6 @@ function compactCollection(array){
 		const key = JSON.stringify(card)
 		if(!duplicates[key]) duplicates[key] = {'count': 0, 'index': index}
 		duplicates[key]['count'] += 1
-		duplicates[key]['index'] = index
 		console.log('key: ', duplicates[key])
 	})
 	

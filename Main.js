@@ -45,7 +45,7 @@ window.addEventListener('resize', (event) => {
 });
 
 function buildStage(conn){
-	if(Draft){
+	if(Draft.state.phase){
 		if(Draft.state.phase == "draft") showDraftScreen(conn)
 		if(Draft.state.phase == "await_client") showAwaitGuestScreen()
 	} else showConfigurationScreen()
