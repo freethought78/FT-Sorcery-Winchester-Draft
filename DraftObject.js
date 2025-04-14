@@ -21,7 +21,7 @@ function shuffle(array){
 function nextPull(conn){
 	    for (var colid in Draft.state['draft_columns']){
 			var col = Draft.state['draft_columns'][colid]
-            col.push(Draft.cube.pop())
+			if(Draft.cube.length > 0) col.push(Draft.cube.pop())
 		}
         if (Draft.state.turn == 'host') Draft.state.turn = 'guest'
         else Draft.state.turn = 'host'
