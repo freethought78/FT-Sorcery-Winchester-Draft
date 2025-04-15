@@ -48,5 +48,6 @@ function buildStage(conn){
 	if(Draft.state.phase){
 		if(Draft.state.phase == "draft") showDraftScreen(conn)
 		if(Draft.state.phase == "await_client") showAwaitGuestScreen()
+		if(Draft.state.phase == "post_deck") showPostDeckScreen()
 	} else showConfigurationScreen()
 }
