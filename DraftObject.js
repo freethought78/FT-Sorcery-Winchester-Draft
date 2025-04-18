@@ -25,8 +25,8 @@ function nextPull(conn){
 		}
         if (Draft.state.turn == 'host') Draft.state.turn = 'guest'
         else Draft.state.turn = 'host'
-		if (JSON.stringify(Draft.state.draft_columns) == JSON.stringify([[],[],[],[]])) Draft.state.phase = 'post_deck'
 		buildStage(conn)
+		if (JSON.stringify(Draft.state.draft_columns) == JSON.stringify([[],[],[],[]])) Draft.state.phase = 'post_deck'
 		sendStateUpdate(conn)
 }
 

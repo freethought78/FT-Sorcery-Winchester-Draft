@@ -24,7 +24,7 @@ peer.on('open', function(id) {
 	//Host Entry Point
     } else {
 		userID = 'host'
-		draft_configuration = showConfigurationScreen()
+		showConfigurationScreen()
     }
 });
 
