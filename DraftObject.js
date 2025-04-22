@@ -5,6 +5,7 @@ function createDraftObject(configuration){
 	var cube_source = configuration.cube_source
 	if (cube_source == "random") Draft.cube = generateRandomCube(configuration.cube_size)
 	if (cube_source == "names") Draft.cube = configuration.card_list
+	if (cube_source == "deck") Draft.cube = configuration.card_list
 	Draft.cube = shuffle(Draft.cube)
 	Draft.state = {}
 	Draft.state.host_cards = []
@@ -14,6 +15,7 @@ function createDraftObject(configuration){
 }
 
 function shuffle(array){
+	console.log(array)
 	const shuffledArray = array.sort(() => Math.random() - 0.5);
 	return shuffledArray
 }

@@ -59,25 +59,45 @@ function showConfigurationScreen(){
 	stage.innerHTML = ""
 	stage.innerHTML += `
 		<div id='config_container'>
-		<div class='config_item config_title'>Draft Configuration Options</div>
-		<div class='config_item'>
-		<span class="config_option_title">Cube Source:</span><br>
-		<input type="radio" id="random" name="card_source" value="random" style="padding-left: 50px">
-		<label for="random">Random Cards</label>
-		<div id="cube_size_container" hidden style="padding-left: 100px;">
-			Cube Size: <input class='config_text_input' id='cube_size_input' value='120' style='font-size: 2vh'>
-		</div><br>
-		<input type="radio" id="names" name="card_source" value="names" style="padding-left: 50px">
-		<label for="names">Card Names </label>
-		<div id="cube_list_container" hidden style="padding-left: 50px;">
-			1 Name Per Line, Quantities Allowed (example: 3 Ring of Morrigan) <br>
-			<textarea class='config_text_input' id='card_names_input' rows = '10' cols = '50' style="font-size:2vh">40 Ring of Morrigan\n40 Blink</textarea>
-		</div><br>
-		<div id="incorrect_names_container" hidden style="padding-left: 50px; font-size: 2vh">The following card names are incorrect:
-			<div id="incorrect_names" style="font-size: 1.9vh; color: red; padding-left: 100px"></div>
-		</div>
-		</div>
-		<div class = 'config_done_button' id='finish_configuration_button'>Done</div>
+		
+			<div class='config_item config_title'>
+				Draft Configuration Options</div>
+			
+			<div class='config_item'>
+				<span class="config_option_title">
+					Cube Source:</span><br>
+				
+				<input type="radio" id="random" name="card_source" value="random" style="padding-left: 50px">
+				<label for="random">
+					Random Cards</label>
+				
+					<div id="cube_size_container" hidden style="padding-left: 100px;">
+						Cube Size: <input class='config_text_input' id='cube_size_input' value='120' style='font-size: 2vh'>
+					</div><br>
+				
+				<input type="radio" id="names" name="card_source" value="names" style="padding-left: 50px">
+				<label for="names">
+					Card Names </label>
+				
+					<div id="cube_list_container" hidden style="padding-left: 50px;">
+						1 Name Per Line, Quantities Allowed (example: 3 Ring of Morrigan) <br>
+						<textarea class='config_text_input' id='card_names_input' rows = '10' cols = '50' style="font-size:2vh">40 Ring of Morrigan\n40 Blink</textarea>
+					</div><br>
+				
+					<div id="incorrect_names_container" hidden style="padding-left: 50px; font-size: 2vh">The following card names are incorrect:
+						<div id="incorrect_names" style="font-size: 1.9vh; color: red; padding-left: 100px"></div>
+					</div>
+					
+				<input type="radio" id="deck" name="card_source" value="deck" style="padding-left: 50px">
+				<label for="Deck">
+					Import Deck</label>
+					
+					<div id="deck_link_container" hidden style="padding-left: 100px;">
+						Deck Link: <input class='config_text_input' id='deck_link_input' style='font-size: 2vh'>
+					</div><br>
+				
+			</div>
+			<div class = 'config_done_button' id='finish_configuration_button'>Done</div>
 		</div>
 	`
 
@@ -87,9 +107,12 @@ function showConfigurationScreen(){
 	const cube_size_input = document.querySelector("#cube_size_input")
 	const cube_size_container = document.querySelector("#cube_size_container")
 	const cube_list_container = document.querySelector("#cube_list_container")
+	const deck_link_container = document.querySelector("#deck_link_container")
 	const random_radio_button = document.querySelector("#random")
 	const names_radio_button = document.querySelector("#names")
+	const deck_radio_button = document.querySelector("#deck")
 	const card_names_input = document.querySelector("#card_names_input")
+	const deck_link_input = document.querySelector("#deck_link_input")
 	const incorrect_names_container = document.querySelector("#incorrect_names_container")
 	const incorrect_names = document.querySelector("#incorrect_names")
 
@@ -110,20 +133,72 @@ function showConfigurationScreen(){
 				configuration.card_list = createDuplicates(formatted_list)
 			}
 		}
-		configuration.cube_source = cube_source
-		createDraftObject(configuration)
-		showAwaitGuestScreen()
+		if (cube_source == "deck"){
+			var cube_from_deck 
+			importCubeFromDeck(deck_link_input.value).then(cube=>{
+				cube_from_deck = cube
+				console.log(cube_from_deck)
+				configuration.card_list = cube_from_deck
+				configuration.cube_source = cube_source
+				createDraftObject(configuration)
+				showAwaitGuestScreen()
+			})
+		}else{
+			configuration.cube_source = cube_source
+			createDraftObject(configuration)
+			showAwaitGuestScreen()
+		}
 	}
 	
 	random_radio_button.onclick = ()=>{
 		cube_list_container.setAttribute('hidden', 'hidden')
+		deck_link_container.setAttribute('hidden', 'hidden')
 		cube_size_container.removeAttribute('hidden')
 	}
 	names_radio_button.onclick=()=>{
 		cube_size_container.setAttribute('hidden', 'hidden')
+		deck_link_container.setAttribute('hidden', 'hidden')
 		cube_list_container.removeAttribute('hidden')
+	}	
+	deck_radio_button.onclick=()=>{
+		cube_size_container.setAttribute('hidden', 'hidden')
+		cube_list_container.setAttribute('hidden', 'hidden')
+		deck_link_container.removeAttribute('hidden')
 	}
 	
+}
+
+async function importCubeFromDeck(url){
+	
+	try {
+		const response = await fetch(url);
+		if (!response.ok) {
+			throw new Error(`Response status: ${response.status}`);
+		}
+
+	const json = await response.json();
+	
+	console.log(json);
+	var compact_cube = []
+	json.atlas.forEach(card=>compact_cube.push(card))
+	json.spellbook.forEach(card=>compact_cube.push(card))
+	
+	var final_cube = []
+	compact_cube.forEach(card=>{
+		for(var count = 0; count<card.quantity; count++){
+			final_cube.push(JSON.parse(JSON.stringify(card)))
+		}
+	})
+	
+	console.log(final_cube)
+	return Promise.resolve(final_cube)
+	
+	} catch (error) {
+		console.error(error.message);
+	}
+	
+	
+
 }
 	
 function formatCardList(list){
