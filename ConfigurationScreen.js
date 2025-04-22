@@ -1,25 +1,87 @@
 function showConfigurationScreen(){
-	stage.innerHTML = ""
-	stage.innerHTML += `<h1> Draft Configuration Options</h1>
-	<h2>Cube Source:</h2>
-	<h3>
-	<input type="radio" id="random" name="card_source" value="random" style="padding-left: 50px">
-	<label for="random">Random Cards</label>
-	<div id="cube_size_container" hidden style="padding-left: 100px;">
-		Cube Size: <input id='cube_size_input' value='120' style='font-size: 2vh'>
-	</div><br>
-	<input type="radio" id="names" name="card_source" value="names" style="padding-left: 50px">
-	<label for="names">Card Names </label>
-	<div id="cube_list_container" hidden style="padding-left: 50px;">
-		1 Name Per Line, Quantities Allowed (example: 3 Ring of Morrigan) <br>
-		<textarea id='card_names_input' rows = '10' cols = '50' style="font-size:2vh">40 Ring of Morrigan\n40 Blink</textarea>
-	</div><br>
-	<div id="incorrect_names_container" hidden style="padding-left: 50px; font-size: 2vh">The following card names are incorrect:
-		<div id="incorrect_names" style="font-size: 1.9vh; color: red; padding-left: 100px"></div>
-	</div>
-	</h3>
+	var main_style = document.querySelector("#main_style")
+	
+	main_style.innerHTML += `
+		#config_container{
+			height: 100%;
+			padding: 10vh;
+		}
+		
+		.config_item {
+			margin: 2vh;
+			padding: 2vh 3vh;
+			background-color: #000000AA;
+			border-radius: 1vh;
+			justify-self: center;
+			font-size: 3vh;
+			border: 4px solid #a11dad;
+		}
+		.config_title{
+			font-size: 5vh;
+			padding: 3vh 4vw;
+		}		
+		.config_option_title{
+			font-size: 4vh;
+		}
+		.config_done_button{
+			box-shadow: 3px 4px 3px 0px #2f0fab;
+			background:linear-gradient(to bottom, #ff7aeb 5%, #923be3 100%);
+			background-color:#ff7aeb;
+			border-radius:4px;
+			border:4px solid #a11dad;
+			cursor:pointer;
+			color:#f0f0f0;
+			font-family:Trebuchet MS;
+			font-size:28px;
+			font-weight:bold;
+			padding:12px 44px;
+			text-decoration:none;
+			text-shadow:1px 2px 7px #000000;
+			justify-self: center;
+		}
+		.config_done_button:hover {
+			background:linear-gradient(to bottom, #923be3 5%, #ff7aeb 100%);
+			background-color:#923be3;
+		}
+		.config_done_button:active {
+			position:relative;
+			top:1px;
+		}
+		
+		.config_text_input{
+			background-color: #000000AA;
+			border: 4px solid #a11dad;
+			color: #a11dad;
+			border-radius: 1vh;
+		}
 	`
-	stage.innerHTML += "<br><button id='finish_configuration_button' style='font-size: 2vh'>Done</button>"
+	
+	stage.innerHTML = ""
+	stage.innerHTML += `
+		<div id='config_container'>
+		<div class='config_item config_title'>Draft Configuration Options</div>
+		<div class='config_item'>
+		<span class="config_option_title">Cube Source:</span><br>
+		<input type="radio" id="random" name="card_source" value="random" style="padding-left: 50px">
+		<label for="random">Random Cards</label>
+		<div id="cube_size_container" hidden style="padding-left: 100px;">
+			Cube Size: <input class='config_text_input' id='cube_size_input' value='120' style='font-size: 2vh'>
+		</div><br>
+		<input type="radio" id="names" name="card_source" value="names" style="padding-left: 50px">
+		<label for="names">Card Names </label>
+		<div id="cube_list_container" hidden style="padding-left: 50px;">
+			1 Name Per Line, Quantities Allowed (example: 3 Ring of Morrigan) <br>
+			<textarea class='config_text_input' id='card_names_input' rows = '10' cols = '50' style="font-size:2vh">40 Ring of Morrigan\n40 Blink</textarea>
+		</div><br>
+		<div id="incorrect_names_container" hidden style="padding-left: 50px; font-size: 2vh">The following card names are incorrect:
+			<div id="incorrect_names" style="font-size: 1.9vh; color: red; padding-left: 100px"></div>
+		</div>
+		</div>
+		<div class = 'config_done_button' id='finish_configuration_button'>Done</div>
+		</div>
+	`
+
+	stage.innerHTML += ""
 
 	const finish_configuration_button = document.querySelector("#finish_configuration_button")
 	const cube_size_input = document.querySelector("#cube_size_input")
