@@ -169,7 +169,8 @@ function showConfigurationScreen(){
 }
 
 async function importCubeFromDeck(url){
-	
+	url = 'https://corsproxy.io/?url='+url
+	url = url.replace('curiosa.io/deck', 'curiosa.io/api/deck')
 	try {
 		const response = await fetch(url);
 		if (!response.ok) {
