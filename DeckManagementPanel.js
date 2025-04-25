@@ -86,9 +86,22 @@ function addCardToPanel(card, array_id){
 	var left_button_text = panel_section_switch[card.section][1]
 	var right_button_text = panel_section_switch[card.section][2]
 	
+	var earth_thresh = card.metadata.earthThreshold
+	var fire_thresh = card.metadata.fireThreshold
+	var water_thresh = card.metadata.waterThreshold
+	var air_thresh = card.metadata.airThreshold
+	
 	const card_div = document.createElement('div');			panel_section.appendChild(card_div)
 	const card_quantity = document.createElement('div'); 	card_div.appendChild(card_quantity)
 	const card_label = document.createElement('div'); 		card_div.appendChild(card_label)
+	const element_symbol_grid = document.createElement('div'); 	card_div.appendChild(element_symbol_grid)
+	element_symbol_grid.classList.add('element_symbol_grid')
+	
+	if (earth_thresh) drawEarth(element_symbol_grid)
+	if (fire_thresh) drawFire(element_symbol_grid)
+	if (water_thresh) drawWater(element_symbol_grid)
+	if (air_thresh) drawAir(element_symbol_grid)
+	
 	const section_button_1 = document.createElement('div'); card_div.appendChild(section_button_1)
 	const section_button_2 = document.createElement('div'); card_div.appendChild(section_button_2)
 	card_div.classList.add('card_slot')

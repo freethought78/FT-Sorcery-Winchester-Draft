@@ -5,6 +5,7 @@
 </html>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="ElementSymbols.js"></script>
 <script src="Alpha-Beta.js"></script>
 <script src="Arthurian Legends.js"></script>
 <script src="Main.js"></script>
@@ -68,7 +69,7 @@ var conn;
 .card_slot{
 	display: grid;
 	--square_size: calc(25vh / 11);
-	grid-template-columns: var(--square_size) auto var(--square_size) var(--square_size);
+	grid-template-columns: var(--square_size) auto auto var(--square_size) var(--square_size);
 	font-size: calc(25vh / 11) ;
 	height: calc(25vh / 10);
 	line-height: calc(25vh / 10);
@@ -90,6 +91,19 @@ var conn;
 .card_label{
 	justify-self: left;
 	padding-right: var(--square_size);
+}
+
+.element_symbol{
+	height: calc(25vh/10);
+	width: calc(25vh/10);
+	justify-self: end;
+}
+
+.element_symbol_grid{
+	display:grid;
+	grid-auto-flow: column;
+	justify-self: end;
+	justify: end;
 }
 
 .panel_button{
