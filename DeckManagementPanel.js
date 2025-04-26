@@ -117,6 +117,8 @@ function addCardToPanel(card, array_id){
 	
 	card_quantity.innerHTML = card.quantity
 	card_label.innerHTML = card.name
+	var preview = card.src
+	card_div.onmouseover=()=>document.getElementById('card_preview').src = `${preview}`
 }
 
 function moveCard(array_id, section){
