@@ -30,7 +30,7 @@ function prepareDeck(){
 	var collection = Draft.state[`${userID}_cards`]
 	var compacted_collection = compactCollection(collection)
 	var prepared_deck = {avatar: [], spellbook: [], atlas: [], sideboard: [], maybe: []}
-	prepared_deck.avatar.push(master_card_list.find((card)=>{return card.name = 'Sorcerer'}))
+	prepared_deck.avatar.push(master_card_list.find((card)=>{return card.name = 'Spellslinger'}))
 	compacted_collection.forEach((card)=>{
 		if (card.section == 'sideboard') prepared_deck.sideboard.push(card)
 		if (card.section == 'maybe') prepared_deck.sideboard.push(card)
